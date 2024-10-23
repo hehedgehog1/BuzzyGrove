@@ -401,7 +401,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1068887824}
   - component: {fileID: 1068887823}
-  - component: {fileID: 1068887822}
   m_Layer: 0
   m_Name: HoneyManager
   m_TagString: Untagged
@@ -409,19 +408,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1068887822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1068887821}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c4cc497700e375419a33da3a5a88580, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeToHoney: 180
 --- !u!114 &1068887823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -434,7 +420,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c4cc497700e375419a33da3a5a88580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToHoney: 180
+  timeToHoney: 20
 --- !u!4 &1068887824
 Transform:
   m_ObjectHideFlags: 0
@@ -663,7 +649,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1392853229
+--- !u!1001 &1359536608
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -671,13 +657,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -2209952190198564779, guid: e0b8f79054a37e942b7f094db83030ce, type: 3}
-      propertyPath: honeyProduction
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 8034324393599689936, guid: e0b8f79054a37e942b7f094db83030ce, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.89
+      value: 9.83
       objectReference: {fileID: 0}
     - target: {fileID: 8034324393599689936, guid: e0b8f79054a37e942b7f094db83030ce, type: 3}
       propertyPath: m_LocalPosition.y
@@ -685,7 +667,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8034324393599689936, guid: e0b8f79054a37e942b7f094db83030ce, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7.43
+      value: -4.49
       objectReference: {fileID: 0}
     - target: {fileID: 8034324393599689936, guid: e0b8f79054a37e942b7f094db83030ce, type: 3}
       propertyPath: m_LocalRotation.w
@@ -741,10 +723,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3db9c8130de1e6142b1f0b720ce6ba36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 8
   seedCount: 0
   flowerCount: 0
   honeyCount: 0
+  dayTimer: 350
 --- !u!54 &1505878796
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1019,5 +1002,5 @@ SceneRoots:
   - {fileID: 1517741748}
   - {fileID: 2049834711}
   - {fileID: 1943531734}
-  - {fileID: 1392853229}
   - {fileID: 1068887824}
+  - {fileID: 1359536608}

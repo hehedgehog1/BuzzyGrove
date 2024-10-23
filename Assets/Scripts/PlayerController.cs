@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
             if (dayTimer > 0)
             {
                 dayTimer -= Time.deltaTime; // Decrement timer by the time passed since last frame
-                Debug.Log("current time: " + dayTimer);
+                //Debug.Log("current time: " + dayTimer);
             }
             else
             {
