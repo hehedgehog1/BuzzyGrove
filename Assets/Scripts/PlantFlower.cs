@@ -33,6 +33,9 @@ public class PlantFlower : MonoBehaviour
 
             if (playerController != null && playerController.seedCount > 0)
             {
+                playerController.seedCount--;
+                playerController.flowerCount++;
+
                 flowerPlanted = true;
 
                 Vector3 soilPosition = transform.position;

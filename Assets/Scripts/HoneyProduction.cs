@@ -23,6 +23,7 @@ public class HoneyProduction : MonoBehaviour
 
     public void StartMakingHoney()
     {
+        //TODO: Honey is only made once per flower. This should probably be continuously while flowers exist.
         Debug.Log("Honey Started");
         StartCoroutine(ProduceHoney());
 
