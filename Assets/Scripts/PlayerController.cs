@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 5f;
+    public int seedCount = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -20,5 +21,14 @@ public class PlayerController : MonoBehaviour
 
         Vector3 move = new Vector3(moveX, 0, moveZ);
         transform.Translate(move);
+    }
+
+    void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.CompareTag("Seed"))
+        {
+            seedCount++;
+            Debug.Log("New seed collected. Total seeds: " + seedCount);
+        }
     }
 }
