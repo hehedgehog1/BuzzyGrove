@@ -9,7 +9,7 @@ public class PlantFlower : MonoBehaviour
     public GameObject birdPrefab;
     public float birdChance = 0.3f;
     public float seedGrowingTime = 60f;
-    public float birdEatingTime = 60f;
+    public float birdEatingTime = 15f;
     private bool seedPlanted = false;
     public HoneyProduction honeyProduction;
     private PlayerController playerController;
@@ -68,6 +68,37 @@ public class PlantFlower : MonoBehaviour
         else if (other.CompareTag("Player") && seedPlanted && birdInstance != null)
         {
             Debug.Log("Player scared the bird away!");
+            StartCoroutine(BirdFliesAway());
+        }
+    }
+
+    private IEnumerator BirdFliesAway()
+    {
+        Vector3 startPosition = birdInstance.transform.position;
+
+        Vector3 offScreenPosition = new Vector3(60f, 10f, 10f);
+
+        float duration = 1.0f; // Duration of the movement
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / duration;
+
+            // Smoothly moves between the start and offscreen position
+            if (birdInstance != null) // Check if the birdInstance is still valid
+            {
+                birdInstance.transform.position = Vector3.Lerp(startPosition, offScreenPosition, t);
+            }
+            
+            // Wait for next frame
+            yield return null;
+        }
+
+        // Delete bird
+        if (birdInstance != null)
+        {
             Destroy(birdInstance);
         }
     }
@@ -131,7 +162,7 @@ public class PlantFlower : MonoBehaviour
     private IEnumerator BirdWaitThenEat()
     {
         Debug.Log("A bird has appeared!");
-        yield return new WaitForSeconds(birdEatingTime/2);
+        yield return new WaitForSeconds(birdEatingTime);
 
         if (seedPlanted && birdInstance != null)
         {

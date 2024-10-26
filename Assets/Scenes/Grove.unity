@@ -658,6 +658,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5350608051192204206, guid: e0b8f79054a37e942b7f094db83030ce, type: 3}
+      propertyPath: birdChance
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5350608051192204206, guid: e0b8f79054a37e942b7f094db83030ce, type: 3}
       propertyPath: honeyProduction
       value: 
       objectReference: {fileID: 1068887823}
