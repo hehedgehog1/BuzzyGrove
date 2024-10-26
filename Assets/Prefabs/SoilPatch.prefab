@@ -143,4 +143,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flowerPrefabs:
   - {fileID: 7064702629152981828, guid: 1571613f0800d0747a9b73ff62355c0f, type: 3}
+  seededMaterial: {fileID: 2100000, guid: 5efe887d1b86ac84ebb06d15a7f41e68, type: 2}
+  defaultMaterial: {fileID: 2100000, guid: 67a27a65a8b533a428e7136c417a258d, type: 2}
+  birdPrefab: {fileID: 5828485548701876567, guid: 0dc615b3ec031554a8f460ed8ddf3b19, type: 3}
+  birdChance: 0.3
+  seedGrowingTime: 60
+  birdEatingTime: 60
   honeyProduction: {fileID: 0}
