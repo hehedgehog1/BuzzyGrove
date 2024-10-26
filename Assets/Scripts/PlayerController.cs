@@ -5,17 +5,19 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public GameObject soilPatchPrefab;
     public float speed = 5f;
     public int seedCount = 0;
     public int flowerCount = 0;
     public int honeyCount = 0;
     public float dayTimer = 350f;
     private bool gameOver = false;
+    private Camera mainCamera;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        mainCamera = Camera.main;
     }
 
     void Update()
@@ -34,6 +36,9 @@ public class PlayerController : MonoBehaviour
                 GameOver();
             }
 
+            //Clicking logic
+            HandleMouseClick();
+
             // Movement logic
 
             Rigidbody rb = GetComponent<Rigidbody>();
@@ -46,6 +51,20 @@ public class PlayerController : MonoBehaviour
 
             // Maintain upright rotation
             transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+        }
+    }
+
+    void HandleMouseClick()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 soilPos = transform.position;
+            //TODO: check valid soil pos
+            soilPos.z -= 1f;
+            soilPos.y = 0.03f;
+            Instantiate(soilPatchPrefab, soilPos, Quaternion.identity);
+
+
         }
     }
 
