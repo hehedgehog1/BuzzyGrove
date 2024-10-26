@@ -88,7 +88,10 @@ public class PlantFlower : MonoBehaviour
             Debug.Log("A bird will appear...");
             yield return new WaitForSeconds(seedGrowingTime/4);
             // Spawn the bird and start its behavior coroutine
-            birdInstance = Instantiate(birdPrefab, transform.position, Quaternion.identity);
+
+            Vector3 birdPosition = new Vector3(transform.position.x, 0.5f, transform.position.z);
+
+            birdInstance = Instantiate(birdPrefab, birdPosition, Quaternion.identity);
             StartCoroutine(BirdWaitThenEat());
         }
         
