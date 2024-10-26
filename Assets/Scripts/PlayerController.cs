@@ -35,11 +35,17 @@ public class PlayerController : MonoBehaviour
             }
 
             // Movement logic
-            float moveX = -Input.GetAxis("Horizontal") * Time.deltaTime * speed;
-            float moveZ = -Input.GetAxis("Vertical") * Time.deltaTime * speed;
+
+            Rigidbody rb = GetComponent<Rigidbody>();
+
+            float moveX = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
+            float moveZ = Input.GetAxis("Vertical") * Time.deltaTime * speed;
 
             Vector3 move = new Vector3(moveX, 0, moveZ);
-            transform.Translate(move);
+            rb.MovePosition(rb.position + move);
+
+            // Maintain upright rotation
+            transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
         }
     }
 
