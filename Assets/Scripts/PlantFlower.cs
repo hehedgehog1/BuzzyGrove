@@ -7,9 +7,10 @@ public class PlantFlower : MonoBehaviour
     public Material seededMaterial;          
     public Material defaultMaterial;
     public GameObject birdPrefab;
-    private float birdChance = 0.3f;
+    private float birdChance = 0.5f;
+    private bool birdEating = false;
     private float seedGrowingTime = 60f;
-    private float birdEatingTime = 2f;
+    private float birdEatingTime = 3f;
     private bool seedPlanted = false;
     private HoneyProduction honeyProduction;
     private PlayerController playerController;    
@@ -67,6 +68,7 @@ public class PlantFlower : MonoBehaviour
         else if (other.CompareTag("Player") && seedPlanted && birdInstance != null)
         {
             Debug.Log("Player scared the bird away!");
+            birdEating = false;
             StartCoroutine(BirdFliesAway());
         }
     }
@@ -130,7 +132,7 @@ public class PlantFlower : MonoBehaviour
         // Wait for the seeded state duration (1 minute)
         yield return new WaitForSeconds(seedGrowingTime);
 
-        if (seedPlanted)
+        if (seedPlanted && !birdEating)
         {
             Debug.Log("The seed survived!");
 
@@ -161,6 +163,7 @@ public class PlantFlower : MonoBehaviour
     private IEnumerator BirdWaitThenEat()
     {
         Debug.Log("A bird has appeared!");
+        birdEating = true;
         yield return new WaitForSeconds(birdEatingTime);
 
         if (seedPlanted && birdInstance != null)
@@ -168,6 +171,7 @@ public class PlantFlower : MonoBehaviour
             Debug.Log("A bird ate a seed!");
             seedPlanted = false;
             Destroy(birdInstance);
+            birdEating = false;
 
             // Reset material after seed is eaten
             if (soilRenderer != null)
