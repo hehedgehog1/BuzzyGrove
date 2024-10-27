@@ -11,7 +11,7 @@ public class PlantFlower : MonoBehaviour
     private float seedGrowingTime = 60f;
     private float birdEatingTime = 6f;
     private bool seedPlanted = false;
-    public HoneyProduction honeyProduction; //TODO can this be private
+    private HoneyProduction honeyProduction;
     private PlayerController playerController;    
     private GameObject birdInstance;
     private Renderer soilRenderer;

@@ -9,8 +9,8 @@ public class SpawnManager : MonoBehaviour
     private int seedCount = 0;
     private int soilPatchCount = 0;
     private int spawnLimit = 50;
-    private float spawnRangeX = 20;
-    private float spawnRangeZ = 20;
+    private float spawnRangeX = 50;
+    private float spawnRangeZ = 50;
     private float startDelay = 5;
     private float spawnInterval = 5f;
     private float minSpawnDistance = 2.0f;
@@ -50,8 +50,6 @@ public class SpawnManager : MonoBehaviour
     void SpawnSoilPatch()
     {
         //TODO: Update how often soil patches get spawned
-        //TODO: Dont't let spawns happen underneath cabin
-        //TODO: Check soils cant spawn on top of eachother
         //TODO: Soils should spawn nearer eachother
         Vector3 spawnPos;
 
@@ -65,9 +63,6 @@ public class SpawnManager : MonoBehaviour
 
             validPositionFound = IsValidSpawnPosition(spawnPos);
             attempts++;
-
-            // Debugging output
-            Debug.Log($"Attempt {attempts}: Trying spawn position {spawnPos}, Valid: {validPositionFound}");
 
             // Prevent infinite loop
             if (attempts >= 100) break;
