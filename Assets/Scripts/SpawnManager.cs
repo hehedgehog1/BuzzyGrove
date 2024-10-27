@@ -14,10 +14,13 @@ public class SpawnManager : MonoBehaviour
     private float startDelay = 5;
     private float spawnInterval = 5f;
     private float minSpawnDistance = 2.0f;
+    private PlayerController playerController;
 
     // Start is called before the first frame update
     void Start()
     {
+        playerController = FindObjectOfType<PlayerController>();
+
         if (seedCount < spawnLimit)
         {
             InvokeRepeating("SpawnSeed", startDelay, spawnInterval);

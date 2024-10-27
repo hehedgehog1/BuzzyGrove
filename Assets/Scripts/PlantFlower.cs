@@ -7,6 +7,8 @@ public class PlantFlower : MonoBehaviour
     public Material seededMaterial;          
     public Material defaultMaterial;
     public GameObject birdPrefab;
+    public AudioClip plantSound;
+    public AudioClip birdCawSound;
     private float birdChance = 0.5f;
     private bool birdEating = false;
     private float seedGrowingTime = 60f;
@@ -16,10 +18,13 @@ public class PlantFlower : MonoBehaviour
     private PlayerController playerController;    
     private GameObject birdInstance;
     private Renderer soilRenderer;
+    private AudioSource plantAudio;
 
     // Start is called before the first frame update
     void Start()
     {
+        plantAudio = GetComponent<AudioSource>();
+
         playerController = FindObjectOfType<PlayerController>();
 
         honeyProduction = FindObjectOfType<HoneyProduction>();
@@ -55,7 +60,9 @@ public class PlantFlower : MonoBehaviour
             {
                 Debug.Log("A seed has been planted!");
                 playerController.seedCount--;
-                
+
+                plantAudio.PlayOneShot(plantSound, 1.0f);
+
                 if (soilRenderer != null)
                 {
                     soilRenderer.material = seededMaterial; // Change to seeded material
@@ -67,6 +74,7 @@ public class PlantFlower : MonoBehaviour
         // if player collides w seeded soil and theres a bird on it
         else if (other.CompareTag("Player") && seedPlanted && birdInstance != null)
         {
+            plantAudio.PlayOneShot(birdCawSound);
             Debug.Log("Player scared the bird away!");
             birdEating = false;
             StartCoroutine(BirdFliesAway());

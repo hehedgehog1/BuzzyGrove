@@ -12,7 +12,9 @@ public class PlayerController : MonoBehaviour
     public int honeyCount = 0;
     public float dayTimer = 300f; //5 mins
     public string timeOfDay = "";
-    private bool gameOver = false;
+    public AudioClip seedPickUpSound;
+    private AudioSource playerAudio;
+    public bool gameOver = false;
     private float xRange = 50.0f;
     private float zRange = 50.0f;
 
@@ -20,7 +22,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerAudio = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -98,6 +100,8 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Seed"))
         {
+            playerAudio.PlayOneShot(seedPickUpSound, 1.0f);
+
             seedCount++;
             Debug.Log("New seed collected. Total seeds: " + seedCount);
         }
