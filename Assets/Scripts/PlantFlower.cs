@@ -7,13 +7,12 @@ public class PlantFlower : MonoBehaviour
     public Material seededMaterial;          
     public Material defaultMaterial;
     public GameObject birdPrefab;
-    public float birdChance = 0.3f;
-    public float seedGrowingTime = 60f;
-    public float birdEatingTime = 15f;
+    private float birdChance = 0.3f;
+    private float seedGrowingTime = 60f;
+    private float birdEatingTime = 6f;
     private bool seedPlanted = false;
-    public HoneyProduction honeyProduction;
-    private PlayerController playerController;
-    
+    public HoneyProduction honeyProduction; //TODO can this be private
+    private PlayerController playerController;    
     private GameObject birdInstance;
     private Renderer soilRenderer;
 

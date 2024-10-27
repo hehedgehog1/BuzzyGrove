@@ -8,6 +8,7 @@ TagManager:
   - SoilPatch
   - Flower
   - Hive
+  - Ground
   layers:
   - Default
   - TransparentFX

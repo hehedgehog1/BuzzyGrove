@@ -13,6 +13,7 @@ public class SpawnManager : MonoBehaviour
     private float spawnRangeZ = 20;
     private float startDelay = 5;
     private float spawnInterval = 5f;
+    private float minSpawnDistance = 2.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -52,8 +53,53 @@ public class SpawnManager : MonoBehaviour
         //TODO: Dont't let spawns happen underneath cabin
         //TODO: Check soils cant spawn on top of eachother
         //TODO: Soils should spawn nearer eachother
-        Vector3 spawnPos = new Vector3(Random.Range(-spawnRangeX, spawnRangeX), 0.03f, Random.Range(-spawnRangeZ, spawnRangeZ));
+        Vector3 spawnPos;
 
-        Instantiate(soilPatchPrefab, spawnPos, soilPatchPrefab.transform.rotation);
+        // Try finding a valid spawn position
+        bool validPositionFound = false;
+        int attempts = 0;
+
+        do
+        {
+            spawnPos = new Vector3(Random.Range(-spawnRangeX, spawnRangeX), 0.03f, Random.Range(-spawnRangeZ, spawnRangeZ));
+
+            validPositionFound = IsValidSpawnPosition(spawnPos);
+            attempts++;
+
+            // Debugging output
+            Debug.Log($"Attempt {attempts}: Trying spawn position {spawnPos}, Valid: {validPositionFound}");
+
+            // Prevent infinite loop
+            if (attempts >= 100) break;
+
+        } while (!validPositionFound);
+
+        if (validPositionFound)
+        {
+            Instantiate(soilPatchPrefab, spawnPos, soilPatchPrefab.transform.rotation);
+        }
+        else
+        {
+            Debug.LogWarning("Could not find a valid spawn position after multiple attempts.");
+        }
+    }
+
+    private bool IsValidSpawnPosition(Vector3 position)
+    {
+        // Check for overlaps with other soil patches or objects
+        Collider[] hitColliders = Physics.OverlapSphere(position, minSpawnDistance);
+
+        foreach (Collider collider in hitColliders)
+        {
+            if (collider.CompareTag("Ground"))
+            {
+                continue; // ignore if collides with ground
+            }
+            // else pos is invalid
+            return false;
+        }
+
+        // If no other colliders were found, the position is valid
+        return true;
     }
 }
