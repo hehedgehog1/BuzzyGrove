@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public TextMeshProUGUI seedText;
+    public TextMeshProUGUI timeOfDayText;
     public TextMeshProUGUI honeyText;
-    public TextMeshProUGUI flowerText;
     private PlayerController playerController;
 
     // Start is called before the first frame update
@@ -21,8 +21,8 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         seedText.text = "Seeds: " + playerController.seedCount;
-        honeyText.text = "Honey: " + playerController.honeyCount;
-        flowerText.text = "Flowers: " + playerController.flowerCount;
+        timeOfDayText.text = playerController.timeOfDay;
+        honeyText.text = "Honey: " + playerController.honeyCount;        
     }
 
 }

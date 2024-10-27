@@ -10,7 +10,7 @@ public class PlantFlower : MonoBehaviour
     private float birdChance = 0.5f;
     private bool birdEating = false;
     private float seedGrowingTime = 60f;
-    private float birdEatingTime = 3f;
+    private float birdEatingTime = 4f;
     private bool seedPlanted = false;
     private HoneyProduction honeyProduction;
     private PlayerController playerController;    

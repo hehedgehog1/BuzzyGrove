@@ -10,7 +10,8 @@ public class PlayerController : MonoBehaviour
     public int seedCount = 0;
     public int flowerCount = 0;
     public int honeyCount = 0;
-    public float dayTimer = 350f;
+    public float dayTimer = 300f; //5 mins
+    public string timeOfDay = "";
     private bool gameOver = false;
     private float xRange = 50.0f;
     private float zRange = 50.0f;
@@ -24,6 +25,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        updateDayLeft();
+
         if (!gameOver)
         {
             // Timer logic
@@ -68,6 +71,26 @@ public class PlayerController : MonoBehaviour
 
             // Maintain upright rotation
             transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+        }
+    }
+
+    private void updateDayLeft()
+    {
+        if (dayTimer > 240f)
+        {
+            timeOfDay = "Morning";
+        }
+        else if (dayTimer > 120f)
+        {
+            timeOfDay = "Afternoon";
+        }
+        else if (gameOver)
+        {
+            timeOfDay = "Goodnight!";
+        }
+        else
+        {
+            timeOfDay = "Evening!";
         }
     }
 
