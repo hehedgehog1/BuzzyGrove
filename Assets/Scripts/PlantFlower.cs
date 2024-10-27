@@ -9,7 +9,7 @@ public class PlantFlower : MonoBehaviour
     public GameObject birdPrefab;
     private float birdChance = 0.3f;
     private float seedGrowingTime = 60f;
-    private float birdEatingTime = 6f;
+    private float birdEatingTime = 2f;
     private bool seedPlanted = false;
     private HoneyProduction honeyProduction;
     private PlayerController playerController;    

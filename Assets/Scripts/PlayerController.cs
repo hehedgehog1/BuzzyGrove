@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class PlayerController : MonoBehaviour
     public int honeyCount = 0;
     public float dayTimer = 350f;
     private bool gameOver = false;
+    private float xRange = 50.0f;
+    private float zRange = 50.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +40,24 @@ public class PlayerController : MonoBehaviour
             // Movement logic
 
             Rigidbody rb = GetComponent<Rigidbody>();
+
+            // out of bounds handling
+            if (rb.position.x < -xRange)
+            {
+                rb.position = new Vector3(-xRange, rb.position.y, rb.position.z);
+            }
+            if (rb.position.x > xRange)
+            {
+                rb.position = new Vector3(xRange, rb.position.y, rb.position.z);
+            }
+            if (rb.position.z < -zRange)
+            {
+                rb.position = new Vector3(rb.position.x, rb.position.y, -zRange);
+            }
+            if (rb.position.z > zRange)
+            {
+                rb.position = new Vector3(rb.position.x, rb.position.y, zRange);
+            }
 
             float moveX = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
             float moveZ = Input.GetAxis("Vertical") * Time.deltaTime * speed;
