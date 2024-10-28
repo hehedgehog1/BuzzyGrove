@@ -3,19 +3,26 @@ using UnityEngine;
 
 public class PlantFlower : MonoBehaviour
 {
+    [Header("Game Objects & Materials")]
     public GameObject[] flowerPrefabs;
-    public Material seededMaterial;          
+    public Material seededMaterial;
     public Material defaultMaterial;
     public GameObject birdPrefab;
+
+    [Header("Audio")]
     public AudioClip plantSound;
     public AudioClip birdCawSound;
+
+    [Header("Timing Settings")]
     private float birdChance = 0.5f;
-    private bool birdEating = false;
     private float seedGrowingTime = 60f;
     private float birdEatingTime = 4f;
+
     private bool seedPlanted = false;
+    private bool birdEating = false;
+
     private HoneyProduction honeyProduction;
-    private PlayerController playerController;    
+    private PlayerController playerController;
     private GameObject birdInstance;
     private Renderer soilRenderer;
     private AudioSource plantAudio;
@@ -24,70 +31,124 @@ public class PlantFlower : MonoBehaviour
     void Start()
     {
         plantAudio = GetComponent<AudioSource>();
-
         playerController = FindObjectOfType<PlayerController>();
-
         honeyProduction = FindObjectOfType<HoneyProduction>();
+        soilRenderer = GetComponent<Renderer>();
 
         if (honeyProduction == null)
         {
             Debug.LogError("No HoneyProduction script found.");
         }
 
-        // Get the Renderer component to change materials
-        soilRenderer = GetComponent<Renderer>();
-        
-        if (soilRenderer != null)
-        {
-            soilRenderer.material = defaultMaterial;
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        SetSoilMaterial(defaultMaterial);
+    }    
 
     void OnTriggerEnter(Collider other)
     {
-        // if player collides w unseeded soil
-        if (other.CompareTag("Player") && !seedPlanted)
+        if (!other.CompareTag("Player")) return;
+
+        // if player touches unseeded soil:
+        if (!seedPlanted)
         {
-            PlayerController playerController = other.GetComponent<PlayerController>();
-
-            if (playerController != null && playerController.seedCount > 0)
-            {
-                Debug.Log("A seed has been planted!");
-                playerController.seedCount--;
-
-                plantAudio.PlayOneShot(plantSound, 1.0f);
-
-                if (soilRenderer != null)
-                {
-                    soilRenderer.material = seededMaterial; // Change to seeded material
-                }
-
-                PlantSeed();
-            }            
+            TryPlantSeed(other);
         }
-        // if player collides w seeded soil and theres a bird on it
-        else if (other.CompareTag("Player") && seedPlanted && birdInstance != null)
+        else if (birdInstance != null)
         {
-            plantAudio.PlayOneShot(birdCawSound);
-            Debug.Log("Player scared the bird away!");
+            ScareBirdAway();
+        }
+    }
+
+    private void TryPlantSeed(Collider other)
+    {
+        var playerController = other.GetComponent<PlayerController>();
+
+        if (playerController == null || playerController.seedCount <= 0) return;
+
+        playerController.seedCount--;
+        PlaySound(plantSound);
+        SetSoilMaterial(seededMaterial);  
+        seedPlanted = true;
+        Debug.Log("A seed has been planted!");
+        StartCoroutine(SeededState());
+    }
+
+    private void ScareBirdAway()
+    {
+        PlaySound(birdCawSound);
+        birdEating = false;
+        StopCoroutine(BirdWaitThenEat());
+
+        Debug.Log("Player scared the bird away!");
+        StartCoroutine(BirdFliesAway());
+    }
+
+    private IEnumerator SeededState()
+    {
+        //Randomly decide if bird appears
+        if (Random.value < birdChance)
+        {
+            Debug.Log("A bird will appear...");
+            yield return new WaitForSeconds(seedGrowingTime / 4);
+            SpawnBird();            
+        }
+        else
+        {
+            Debug.Log("A bird will not appear...");
+        }        
+
+        // Wait for seed to grow
+        yield return new WaitForSeconds(seedGrowingTime);
+
+        if (seedPlanted && !birdEating)
+        {
+            FloweredState();
+        }            
+    }
+
+    private void SpawnBird()
+    {
+        Vector3 birdPosition = new Vector3(transform.position.x, 0.5f, transform.position.z);
+        birdInstance = Instantiate(birdPrefab, birdPosition, Quaternion.identity);
+        StartCoroutine(BirdWaitThenEat());
+    }
+
+    private void FloweredState()
+    {
+        Debug.Log("The seed survived!");
+        SetSoilMaterial(defaultMaterial);
+
+        playerController.flowerCount++;
+        Debug.Log("A flower has grown! Flower count: " + playerController.flowerCount);
+
+        // There is only one flower prefab atm, but incase of multiple in future
+        int flowerIndex = Random.Range(0, flowerPrefabs.Length);
+        Instantiate(flowerPrefabs[flowerIndex], transform.position, Quaternion.identity);
+
+        honeyProduction.StartMakingHoney();
+    }
+
+    private IEnumerator BirdWaitThenEat()
+    {        
+        birdEating = true;
+        Debug.Log("A bird has appeared!");
+
+        yield return new WaitForSeconds(birdEatingTime);
+
+        if (seedPlanted && birdInstance != null && birdEating)
+        {
+            Debug.Log("A bird ate a seed!");
+            seedPlanted = false;
+            Destroy(birdInstance);
             birdEating = false;
-            StartCoroutine(BirdFliesAway());
+            SetSoilMaterial(defaultMaterial);            
         }
     }
 
     private IEnumerator BirdFliesAway()
     {
         Vector3 startPosition = birdInstance.transform.position;
-
         Vector3 offScreenPosition = new Vector3(60f, 10f, 10f);
-
-        float duration = 1.0f; // Duration of the movement
+        float duration = 1.0f; // Duration of bird flight
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
@@ -110,82 +171,21 @@ public class PlantFlower : MonoBehaviour
         {
             Destroy(birdInstance);
         }
-    }
-
-    private void PlantSeed()
-    {
-        seedPlanted = true;
-        StartCoroutine(SeededState());
-    }
-
-    private IEnumerator SeededState()
-    {
-        Debug.Log("Flowers are growing...");
-
-        //Randomly decide if bird appears
-        if (Random.value < birdChance)
-        {
-            Debug.Log("A bird will appear...");
-            yield return new WaitForSeconds(seedGrowingTime/4);
-            // Spawn the bird and start its behavior coroutine
-
-            Vector3 birdPosition = new Vector3(transform.position.x, 0.5f, transform.position.z);
-
-            birdInstance = Instantiate(birdPrefab, birdPosition, Quaternion.identity);
-            StartCoroutine(BirdWaitThenEat());
-        }
-        
-        Debug.Log("A bird will not appear...");
-
-        // Wait for the seeded state duration (1 minute)
-        yield return new WaitForSeconds(seedGrowingTime);
-
-        if (seedPlanted && !birdEating)
-        {
-            Debug.Log("The seed survived!");
-
-            if (soilRenderer != null)
-            {
-                soilRenderer.material = defaultMaterial;
-            }
-            FloweredState();
-        }
-    }
-
-    private void FloweredState()
-    {    
-        playerController.flowerCount++;
-
-        Debug.Log("A flower has grown! Flower count: " + playerController.flowerCount);
-
-        Vector3 soilPosition = transform.position;
-
-        // There is only one flower prefab atm, but incase of multiple in future
-        int flowerIndex = Random.Range(0, flowerPrefabs.Length);
-
-        Instantiate(flowerPrefabs[flowerIndex], soilPosition, Quaternion.identity);
-
-        honeyProduction.StartMakingHoney();
-    }
-
-    private IEnumerator BirdWaitThenEat()
-    {
-        Debug.Log("A bird has appeared!");
-        birdEating = true;
-        yield return new WaitForSeconds(birdEatingTime);
-
-        if (seedPlanted && birdInstance != null)
-        {
-            Debug.Log("A bird ate a seed!");
-            seedPlanted = false;
-            Destroy(birdInstance);
-            birdEating = false;
-
-            // Reset material after seed is eaten
-            if (soilRenderer != null)
-            {
-                soilRenderer.material = defaultMaterial; 
-            }
-        }
     }    
+           
+    private void SetSoilMaterial(Material material)
+    {
+        if (soilRenderer != null)
+        {
+            soilRenderer.material = material;
+        }
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (plantAudio != null && clip != null)
+        {
+            plantAudio.PlayOneShot(clip, 1.0f);
+        }
+    }
 }

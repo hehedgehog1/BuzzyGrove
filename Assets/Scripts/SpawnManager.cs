@@ -33,14 +33,14 @@ public class SpawnManager : MonoBehaviour
         }   
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void SpawnSeed()
     {
+        if (playerController != null && playerController.gameOver)
+        {
+            CancelInvoke("SpawnSeed"); // Stop spawning if game is over
+            return;
+        }
+
         //Only 1 seed prefab now, but hopefully more in future.
         int seedIndex = Random.Range(0, seedPrefabs.Length);
         //TODO: Update the spawn range for spawns
@@ -52,6 +52,12 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnSoilPatch()
     {
+        if (playerController != null && playerController.gameOver)
+        {
+            CancelInvoke("SpawnSoilPatch"); // Stop spawning if game is over
+            return;
+        }
+
         //TODO: Update how often soil patches get spawned
         //TODO: Soils should spawn nearer eachother
         Vector3 spawnPos;

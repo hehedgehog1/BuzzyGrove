@@ -15,12 +15,6 @@ public class HoneyProduction : MonoBehaviour
         playerController = FindObjectOfType<PlayerController>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void StartMakingHoney()
     {
         //TODO: Honey is only made once per flower. This should probably be continuously while flowers exist.
@@ -40,7 +34,7 @@ public class HoneyProduction : MonoBehaviour
     {
         yield return new WaitForSeconds(timeToHoney);
 
-        if (playerController != null)
+        if (playerController != null && !playerController.gameOver)
         {
             playerController.honeyCount++;
             Debug.Log("Honey produced! Total honey: " + playerController.honeyCount);
