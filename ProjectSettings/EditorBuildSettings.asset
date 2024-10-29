@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Grove.unity
+    guid: a4a26a1ed30450a41b3e3fcf2b4b0dec
   m_configObjects: {}

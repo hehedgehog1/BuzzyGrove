@@ -9,10 +9,14 @@ public class HoneyProduction : MonoBehaviour
     private const float timeReduction = 5f; // 5s time reduction    
     private PlayerController playerController;
 
+    public AudioClip newHoneySound;
+    private AudioSource honeyAudio;
+
     // Start is called before the first frame update
     void Start()
     {
         playerController = FindObjectOfType<PlayerController>();
+        honeyAudio = GetComponent<AudioSource>();
     }
 
     public void StartMakingHoney()
@@ -37,6 +41,7 @@ public class HoneyProduction : MonoBehaviour
         if (playerController != null && !playerController.gameOver)
         {
             playerController.honeyCount++;
+            honeyAudio.PlayOneShot(newHoneySound, 1.0f);
             Debug.Log("Honey produced! Total honey: " + playerController.honeyCount);
         }
         else

@@ -16,7 +16,8 @@ public class PlantFlower : MonoBehaviour
     [Header("Timing Settings")]
     private float birdChance = 0.5f;
     private float seedGrowingTime = 60f;
-    private float birdEatingTime = 4f;
+    private float birdSpawnTime = 3f;
+    private float birdEatingTime = 10f;
 
     private bool seedPlanted = false;
     private bool birdEating = false;
@@ -88,7 +89,7 @@ public class PlantFlower : MonoBehaviour
         if (Random.value < birdChance)
         {
             Debug.Log("A bird will appear...");
-            yield return new WaitForSeconds(seedGrowingTime / 4);
+            yield return new WaitForSeconds(birdSpawnTime);
             SpawnBird();            
         }
         else
