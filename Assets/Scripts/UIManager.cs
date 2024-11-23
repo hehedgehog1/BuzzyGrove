@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -17,12 +18,18 @@ public class UIManager : MonoBehaviour
         playerController = FindObjectOfType<PlayerController>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateSeedText()
     {
         seedText.text = "Seeds: " + playerController.seedCount;
-        timeOfDayText.text = playerController.timeOfDay;
-        honeyText.text = "Honey: " + playerController.honeyCount;        
     }
 
+    public void UpdateTimeOfDayText()
+    {
+        timeOfDayText.text = playerController.timeOfDay;
+    }
+
+    public void UpdateHoneyText()
+    {
+        honeyText.text = "Honey: " + playerController.honeyCount;
+    }
 }

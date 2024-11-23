@@ -45,7 +45,8 @@ public class FlowerManager : MonoBehaviour
         }
         else if (birdBehaviour != null)
         {
-            //NB: Moved scare trigger here, instead of in BirdBehaviour, because it has a fun side effect of making the birdCawSFX loop and change each time. 
+            //NB: Moved scare trigger here, instead of in BirdBehaviour, because it has a fun side effect 
+            //    of making the birdCawSFX loop and change each time. 
             birdBehaviour.ScareAway();
         }
     }
@@ -54,7 +55,7 @@ public class FlowerManager : MonoBehaviour
     {
         if (playerController.seedCount <= 0) return;
 
-        playerController.seedCount--;
+        playerController.UpdateSeedCount(-1);
         PlaySound(plantSound);
         SetSoilMaterial(seededMaterial);
         seedPlanted = true;

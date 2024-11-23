@@ -17,12 +17,14 @@ public class PlayerController : MonoBehaviour
     public bool gameOver = false;
     private float xRange = 50.0f;
     private float zRange = 50.0f;
+    private UIManager uiManager;
 
 
     // Start is called before the first frame update
     void Start()
     {
         playerAudio = GetComponent<AudioSource>();
+        uiManager = FindObjectOfType<UIManager>();
     }
 
     void Update()
@@ -81,18 +83,22 @@ public class PlayerController : MonoBehaviour
         if (dayTimer > 240f)
         {
             timeOfDay = "Morning";
+            uiManager.UpdateTimeOfDayText();
         }
         else if (dayTimer > 120f)
         {
             timeOfDay = "Afternoon";
+            uiManager.UpdateTimeOfDayText();
         }
         else if (gameOver)
         {
             timeOfDay = "Goodnight!";
+            uiManager.UpdateTimeOfDayText();
         }
         else
         {
             timeOfDay = "Evening!";
+            uiManager.UpdateTimeOfDayText();
         }
     }
 
@@ -101,10 +107,20 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Seed"))
         {
             playerAudio.PlayOneShot(seedPickUpSound, 1.0f);
-
-            seedCount++;
-            Debug.Log("New seed collected. Total seeds: " + seedCount);
+            UpdateSeedCount(1);            
         }
+    }
+
+    public void UpdateSeedCount(int seedToAdd)
+    {
+        seedCount += seedToAdd;
+        uiManager.UpdateSeedText();
+    }
+
+    public void UpdateHoneyCount(int honeyToAdd)
+    {
+        honeyCount += honeyToAdd;
+        uiManager.UpdateHoneyText();
     }
 
     private void GameOver()

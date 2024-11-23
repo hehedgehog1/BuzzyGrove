@@ -40,7 +40,7 @@ public class HoneyProduction : MonoBehaviour
 
         if (playerController != null && !playerController.gameOver)
         {
-            playerController.honeyCount++;
+            playerController.UpdateHoneyCount(1);
             honeyAudio.PlayOneShot(newHoneySound, 1.0f);
             Debug.Log("Honey produced! Total honey: " + playerController.honeyCount);
         }
