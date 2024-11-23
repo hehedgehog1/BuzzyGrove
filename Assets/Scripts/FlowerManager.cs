@@ -22,6 +22,7 @@ public class FlowerManager : MonoBehaviour
     private AudioSource plantAudio;
     private PlayerController playerController;
     private HoneyProduction honeyProduction;
+    private BirdBehaviour birdBehaviour;
 
     void Start()
     {
@@ -37,9 +38,15 @@ public class FlowerManager : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
 
+        // if player touches unseeded soil:
         if (!seedPlanted)
         {
             TryPlantSeed(other);
+        }
+        else if (birdBehaviour != null)
+        {
+            //NB: Moved scare trigger here, instead of in BirdBehaviour, because it has a fun side effect of making the birdCawSFX loop and change each time. 
+            birdBehaviour.ScareAway();
         }
     }
 
@@ -75,7 +82,7 @@ public class FlowerManager : MonoBehaviour
     {
         GameObject birdInstance = Instantiate(birdPrefab, new Vector3(transform.position.x, 0.5f, transform.position.z), Quaternion.identity);
 
-        BirdBehaviour birdBehaviour = birdInstance.GetComponent<BirdBehaviour>();
+        birdBehaviour = birdInstance.GetComponent<BirdBehaviour>();
         if (birdBehaviour != null)
         {
             birdBehaviour.Initialize(this);

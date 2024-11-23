@@ -21,15 +21,6 @@ public class BirdBehaviour : MonoBehaviour
         flowerManager = fm;
         StartCoroutine(BirdWaitThenEat());
     }
-        
-    void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("Collission");
-        if (other.CompareTag("Player"))
-        {
-            ScareAway();
-        }
-    }
 
     public void ScareAway()
     {
