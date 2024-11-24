@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public float dayTimer = 300f; //5 mins
+    private float dayLength;
+    private float daySegmentLength;
     public string timeOfDay = "";
     public bool gameOver = false;
     private UIManager uiManager;
@@ -17,6 +19,9 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         uiManager = FindObjectOfType<UIManager>();
+
+        dayLength = dayTimer;
+        daySegmentLength = dayLength / 3;
     }
 
     // Update is called once per frame
@@ -30,7 +35,6 @@ public class GameManager : MonoBehaviour
             if (dayTimer > 0)
             {
                 dayTimer -= Time.deltaTime; // Decrement timer by the time passed since last frame
-                //Debug.Log("current time: " + dayTimer);
             }
             else
             {
@@ -42,12 +46,15 @@ public class GameManager : MonoBehaviour
 
     private void updateDayLeft()
     {
-        if (dayTimer > 240f)
+        var morningSegment = dayLength - daySegmentLength;
+        var afternoonSegment = morningSegment - daySegmentLength;
+
+        if (dayTimer > morningSegment)
         {
             timeOfDay = "Morning";
             uiManager.UpdateTimeOfDayText();
         }
-        else if (dayTimer > 120f)
+        else if (dayTimer > afternoonSegment)
         {
             timeOfDay = "Afternoon";
             uiManager.UpdateTimeOfDayText();

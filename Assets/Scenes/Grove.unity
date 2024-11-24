@@ -1100,6 +1100,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6da7067d74b264748b3559e75d6a5d35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dayTimer: 300
+  timeOfDay: 
+  gameOver: 0
+  seedCount: 0
+  flowerCount: 0
+  honeyCount: 0
 --- !u!4 &378439938
 Transform:
   m_ObjectHideFlags: 0
@@ -4807,13 +4813,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 8
-  seedCount: 0
-  flowerCount: 0
-  honeyCount: 0
-  dayTimer: 350
-  timeOfDay: Morning
   seedPickUpSound: {fileID: 8300000, guid: d672d5d5d0e74f14b846cd5c06e7511c, type: 3}
-  gameOver: 0
 --- !u!54 &1505878796
 Rigidbody:
   m_ObjectHideFlags: 0
