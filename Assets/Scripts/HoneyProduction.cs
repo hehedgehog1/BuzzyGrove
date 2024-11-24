@@ -7,7 +7,7 @@ public class HoneyProduction : MonoBehaviour
     public float timeToHoney = 20f;
     private const float minTimeToHoney = 5f;
     private const float timeReduction = 5f; // 5s time reduction    
-    private PlayerController playerController;
+    private GameManager gameManager;
 
     public AudioClip newHoneySound;
     private AudioSource honeyAudio;
@@ -15,7 +15,7 @@ public class HoneyProduction : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerController = FindObjectOfType<PlayerController>();
+        gameManager = gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         honeyAudio = GetComponent<AudioSource>();
     }
 
@@ -38,15 +38,11 @@ public class HoneyProduction : MonoBehaviour
     {
         yield return new WaitForSeconds(timeToHoney);
 
-        if (playerController != null && !playerController.gameOver)
+        if (!gameManager.gameOver)
         {
-            playerController.UpdateHoneyCount(1);
+            gameManager.UpdateHoneyCount(1);
             honeyAudio.PlayOneShot(newHoneySound, 1.0f);
-            Debug.Log("Honey produced! Total honey: " + playerController.honeyCount);
-        }
-        else
-        {
-            Debug.LogError("PlayerController reference not found!");
+            Debug.Log("Honey produced! Total honey: " + gameManager.honeyCount);
         }
     }
 }

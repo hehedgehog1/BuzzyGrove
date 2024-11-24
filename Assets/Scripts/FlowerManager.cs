@@ -20,14 +20,14 @@ public class FlowerManager : MonoBehaviour
     public bool seedPlanted = false;
     private Renderer soilRenderer;
     private AudioSource plantAudio;
-    private PlayerController playerController;
+    private GameManager gameManager;
     private HoneyProduction honeyProduction;
     private BirdBehaviour birdBehaviour;
 
     void Start()
     {
         plantAudio = GetComponent<AudioSource>();
-        playerController = FindObjectOfType<PlayerController>();
+        gameManager = gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         honeyProduction = FindObjectOfType<HoneyProduction>();
         soilRenderer = GetComponent<Renderer>();
 
@@ -53,9 +53,9 @@ public class FlowerManager : MonoBehaviour
 
     private void TryPlantSeed(Collider other)
     {
-        if (playerController.seedCount <= 0) return;
+        if (gameManager.seedCount <= 0) return;
 
-        playerController.UpdateSeedCount(-1);
+        gameManager.UpdateSeedCount(-1);
         PlaySound(plantSound);
         SetSoilMaterial(seededMaterial);
         seedPlanted = true;
@@ -101,8 +101,8 @@ public class FlowerManager : MonoBehaviour
     {
         SetSoilMaterial(defaultMaterial);
 
-        playerController.flowerCount++;
-        Debug.Log("A flower has grown! Flower count: " + playerController.flowerCount);
+        gameManager.UpdateFlowerCount(1);
+        Debug.Log("A flower has grown! Flower count: " + gameManager.flowerCount);
 
         int flowerIndex = Random.Range(0, flowerPrefabs.Length);
         Instantiate(flowerPrefabs[flowerIndex], transform.position, Quaternion.identity);

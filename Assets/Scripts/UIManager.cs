@@ -10,26 +10,26 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI seedText;
     public TextMeshProUGUI timeOfDayText;
     public TextMeshProUGUI honeyText;
-    private PlayerController playerController;
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerController = FindObjectOfType<PlayerController>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     public void UpdateSeedText()
     {
-        seedText.text = "Seeds: " + playerController.seedCount;
+        seedText.text = "Seeds: " + gameManager.seedCount;
     }
 
     public void UpdateTimeOfDayText()
     {
-        timeOfDayText.text = playerController.timeOfDay;
+        timeOfDayText.text = gameManager.timeOfDay;
     }
 
     public void UpdateHoneyText()
     {
-        honeyText.text = "Honey: " + playerController.honeyCount;
+        honeyText.text = "Honey: " + gameManager.honeyCount;
     }
 }

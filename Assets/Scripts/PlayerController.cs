@@ -6,47 +6,28 @@ using UnityEngine.SocialPlatforms;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 5f;
-    public int seedCount = 0;
-    public int flowerCount = 0;
-    public int honeyCount = 0;
-    public float dayTimer = 300f; //5 mins
-    public string timeOfDay = "";
+    public float speed = 5f;    
+    
     public AudioClip seedPickUpSound;
     private AudioSource playerAudio;
-    public bool gameOver = false;
+    
     private float xRange = 50.0f;
     private float zRange = 50.0f;
-    private UIManager uiManager;
+    private GameManager gameManager;
 
 
     // Start is called before the first frame update
     void Start()
     {
         playerAudio = GetComponent<AudioSource>();
-        uiManager = FindObjectOfType<UIManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     void Update()
-    {
-        updateDayLeft();
-
-        if (!gameOver)
+    {      
+        if (!gameManager.gameOver)
         {
-            // Timer logic
-            if (dayTimer > 0)
-            {
-                dayTimer -= Time.deltaTime; // Decrement timer by the time passed since last frame
-                //Debug.Log("current time: " + dayTimer);
-            }
-            else
-            {
-                dayTimer = 0;
-                GameOver();
-            }
-
             // Movement logic
-
             Rigidbody rb = GetComponent<Rigidbody>();
 
             // out of bounds handling
@@ -75,57 +56,15 @@ public class PlayerController : MonoBehaviour
 
             // Maintain upright rotation
             transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
-        }
-    }
-
-    private void updateDayLeft()
-    {
-        if (dayTimer > 240f)
-        {
-            timeOfDay = "Morning";
-            uiManager.UpdateTimeOfDayText();
-        }
-        else if (dayTimer > 120f)
-        {
-            timeOfDay = "Afternoon";
-            uiManager.UpdateTimeOfDayText();
-        }
-        else if (gameOver)
-        {
-            timeOfDay = "Goodnight!";
-            uiManager.UpdateTimeOfDayText();
-        }
-        else
-        {
-            timeOfDay = "Evening!";
-            uiManager.UpdateTimeOfDayText();
-        }
-    }
+        }        
+    }    
 
     void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Seed"))
         {
             playerAudio.PlayOneShot(seedPickUpSound, 1.0f);
-            UpdateSeedCount(1);            
+            gameManager.UpdateSeedCount(1);            
         }
-    }
-
-    public void UpdateSeedCount(int seedToAdd)
-    {
-        seedCount += seedToAdd;
-        uiManager.UpdateSeedText();
-    }
-
-    public void UpdateHoneyCount(int honeyToAdd)
-    {
-        honeyCount += honeyToAdd;
-        uiManager.UpdateHoneyText();
-    }
-
-    private void GameOver()
-    {
-        gameOver = true;
-        Debug.Log("Day has ended! HoneyCount = " + honeyCount);
-    }
+    }  
 }

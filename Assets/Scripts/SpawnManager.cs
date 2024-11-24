@@ -14,12 +14,12 @@ public class SpawnManager : MonoBehaviour
     private float startDelay = 5;
     private float spawnInterval = 5f;
     private float minSpawnDistance = 2.0f;
-    private PlayerController playerController;
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerController = FindObjectOfType<PlayerController>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         if (seedCount < spawnLimit)
         {
@@ -35,7 +35,7 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnSeed()
     {
-        if (playerController != null && playerController.gameOver)
+        if (gameManager.gameOver)
         {
             CancelInvoke("SpawnSeed"); // Stop spawning if game is over
             return;
@@ -52,7 +52,7 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnSoilPatch()
     {
-        if (playerController != null && playerController.gameOver)
+        if (gameManager.gameOver)
         {
             CancelInvoke("SpawnSoilPatch"); // Stop spawning if game is over
             return;
