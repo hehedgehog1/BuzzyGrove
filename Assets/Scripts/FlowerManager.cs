@@ -66,11 +66,9 @@ public class FlowerManager : MonoBehaviour
     {
         if (Random.value < birdChance)
         {
-            Debug.Log("A bird will appear");
             yield return new WaitForSeconds(birdSpawnTime);
             SpawnBird();
         }
-        Debug.Log("seed is growing");
         yield return new WaitForSeconds(seedGrowingTime);
 
         if (seedPlanted)
