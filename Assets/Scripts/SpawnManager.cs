@@ -5,9 +5,9 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     public GameObject[] seedPrefabs;
-    public GameObject soilPatchPrefab;
+    public GameObject grassPatchPrefab;
     private int seedCount = 0;
-    private int soilPatchCount = 0;
+    private int grassPatchCount = 0;
     private int spawnLimit = 50;
     private float spawnRangeX = 50;
     private float spawnRangeZ = 50;
@@ -26,10 +26,10 @@ public class SpawnManager : MonoBehaviour
             InvokeRepeating("SpawnSeed", startDelay, spawnInterval);
             seedCount++;
         }
-        if (soilPatchCount < spawnLimit)
+        if (grassPatchCount < spawnLimit)
         {
-            InvokeRepeating("SpawnSoilPatch", startDelay, spawnInterval);
-            soilPatchCount++;
+            InvokeRepeating("SpawnGrassPatch", startDelay, spawnInterval);
+            grassPatchCount++;
         }   
     }
 
@@ -41,25 +41,22 @@ public class SpawnManager : MonoBehaviour
             return;
         }
 
-        //Only 1 seed prefab now, but hopefully more in future.
         int seedIndex = Random.Range(0, seedPrefabs.Length);
-        //TODO: Update the spawn range for spawns
         Vector3 spawnPos = new Vector3(Random.Range(-spawnRangeX, spawnRangeX), 0, Random.Range(-spawnRangeZ, spawnRangeZ));
 
         Instantiate(seedPrefabs[seedIndex], spawnPos, seedPrefabs[seedIndex].transform.rotation);
 
     }
 
-    void SpawnSoilPatch()
+    void SpawnGrassPatch()
     {
         if (gameManager.gameOver)
         {
-            CancelInvoke("SpawnSoilPatch"); // Stop spawning if game is over
+            CancelInvoke("SpawnGrassPatch"); // Stop spawning if game is over
             return;
         }
 
-        //TODO: Update how often soil patches get spawned
-        //TODO: Soils should spawn nearer eachother
+        //TODO: Update how often Grass patches get spawned
         Vector3 spawnPos;
 
         // Try finding a valid spawn position
@@ -80,7 +77,7 @@ public class SpawnManager : MonoBehaviour
 
         if (validPositionFound)
         {
-            Instantiate(soilPatchPrefab, spawnPos, soilPatchPrefab.transform.rotation);
+            Instantiate(grassPatchPrefab, spawnPos, grassPatchPrefab.transform.rotation);
         }
         else
         {
@@ -90,7 +87,7 @@ public class SpawnManager : MonoBehaviour
 
     private bool IsValidSpawnPosition(Vector3 position)
     {
-        // Check for overlaps with other soil patches or objects
+        // Check for overlaps with other grass patches or objects
         Collider[] hitColliders = Physics.OverlapSphere(position, minSpawnDistance);
 
         foreach (Collider collider in hitColliders)
