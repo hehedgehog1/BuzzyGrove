@@ -5,7 +5,7 @@ public class BirdBehaviour : MonoBehaviour
 {
     public AudioClip birdCawSound;
 
-    private float birdEatingTime = 10f;
+    private float birdEatingTime = 20f;
     private FlowerManager flowerManager;
     private AudioSource audioSource;
 

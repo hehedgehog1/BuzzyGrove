@@ -4,6 +4,7 @@ using UnityEngine;
 public class FlowerManager : MonoBehaviour
 {
     [Header("Game Objects & Materials")]
+    public GameObject[] saplingPrefabs;
     public GameObject[] flowerPrefabs;
     public Material seededMaterial;
     public Material defaultMaterial;
@@ -14,15 +15,20 @@ public class FlowerManager : MonoBehaviour
 
     [Header("Timing Settings")]
     private float birdChance = 0.6f;
-    private float seedGrowingTime = 60f;
+    private float stage1_SeededGrowingTime = 10f;
+    private float stage2_SaplingGrowingTime = 25f;
     private float birdSpawnTime = 3f;
 
     public bool seedPlanted = false;
+    public bool isSapling = false;
+    public bool isWatered = false;
+    public bool isBirdEating = false;
     private Renderer soilRenderer;
     private AudioSource plantAudio;
     private GameManager gameManager;
     private HoneyProduction honeyProduction;
     private BirdBehaviour birdBehaviour;
+    private GameObject saplingInstance;
 
     void Start()
     {
@@ -59,22 +65,51 @@ public class FlowerManager : MonoBehaviour
         PlaySound(plantSound);
         SetSoilMaterial(seededMaterial);
         seedPlanted = true;
-        StartCoroutine(SeededState());
+        StartCoroutine(Stage1_SeededState()); //TODO this shouldnt be coroutine, call CR within method
     }
 
-    private IEnumerator SeededState()
+    private IEnumerator Stage1_SeededState()
     {
         if (Random.value < birdChance)
         {
+            Debug.Log("Yes bird");
             yield return new WaitForSeconds(birdSpawnTime);
             SpawnBird();
         }
-        yield return new WaitForSeconds(seedGrowingTime);
+        Debug.Log("No bird");
+
+        yield return new WaitForSeconds(stage1_SeededGrowingTime);
+        Debug.Log("done stage 1");
 
         if (seedPlanted)
         {
-            FloweredState();
+            StartCoroutine(Stage2_SaplingState());
         }
+    }
+
+    private IEnumerator Stage2_SaplingState()
+    {
+        Debug.Log("in stage 2");
+
+        isSapling = true;
+        SetSoilMaterial(defaultMaterial);
+
+        int saplingIndex = Random.Range(0, saplingPrefabs.Length);
+        saplingInstance = Instantiate(saplingPrefabs[saplingIndex], transform.position, Quaternion.identity);
+
+        if (Random.value < birdChance)
+        {
+            Debug.Log("yes bird stage 2");
+            yield return new WaitForSeconds(birdSpawnTime);
+            SpawnBird();
+        }
+        Debug.Log("no bird stage 2");
+
+        //if (seedPlanted && isSapling && isWatered)
+        //{
+        //    yield return new WaitForSeconds(stage2_SaplingGrowingTime);
+        //    Stage3_FloweredState();
+        //}
     }
 
     private void SpawnBird()
@@ -90,12 +125,16 @@ public class FlowerManager : MonoBehaviour
 
     public void OnBirdAteSeed()
     {
-        //potentially re-add birdEating = true here
         seedPlanted = false;
+        isSapling = false;
+        if (saplingInstance != null)
+        {
+            Destroy(saplingInstance);
+        }
         SetSoilMaterial(defaultMaterial);
     }
 
-    private void FloweredState()
+    private void Stage3_FloweredState()
     {
         SetSoilMaterial(defaultMaterial);
 

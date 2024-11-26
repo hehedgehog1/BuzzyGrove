@@ -142,13 +142,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc113e566ca026e4ea74d80298182586, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saplingPrefabs:
+  - {fileID: 6022589671637270126, guid: 42009acbd6afc7f4585e29e80686ec68, type: 3}
   flowerPrefabs:
   - {fileID: 7064702629152981828, guid: 1571613f0800d0747a9b73ff62355c0f, type: 3}
   seededMaterial: {fileID: 2100000, guid: 5efe887d1b86ac84ebb06d15a7f41e68, type: 2}
   defaultMaterial: {fileID: 2100000, guid: 67a27a65a8b533a428e7136c417a258d, type: 2}
   birdPrefab: {fileID: 5828485548701876567, guid: 0dc615b3ec031554a8f460ed8ddf3b19, type: 3}
   plantSound: {fileID: 8300000, guid: 468a025b679a9de4b896daed303458de, type: 3}
-  birdCawSound: {fileID: 8300000, guid: aebeba9611b7e504d95bc1da63ee5564, type: 3}
+  seedPlanted: 0
+  isSapling: 0
+  isWatered: 0
+  isBirdEating: 0
 --- !u!82 &-1384228493751601704
 AudioSource:
   m_ObjectHideFlags: 0
