@@ -6,7 +6,8 @@ using UnityEngine.SocialPlatforms;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 5f;    
+    public float speed = 5f;
+    public int waterCarried = 0;
     
     public AudioClip seedPickUpSound;
     private AudioSource playerAudio;
