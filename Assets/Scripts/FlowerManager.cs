@@ -62,11 +62,17 @@ public class FlowerManager : MonoBehaviour
             //    of making the birdCawSFX loop and change each time. 
             birdBehaviour.ScareAway();
         }
-        else if (!isWatered && playerController.waterCarried > 0)
+    }
+
+    void OnMouseOver()
+    {
+        // Check if the right mouse button is clicked
+        if (Input.GetMouseButtonDown(1) && !isWatered && playerController.waterCarried > 0)
         {
-            StartCoroutine(WaterPlant());            
+            StartCoroutine(WaterPlant());
         }
     }
+
 
     private void TryPlantSeed(Collider other)
     {
