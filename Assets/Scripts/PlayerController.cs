@@ -7,7 +7,7 @@ using UnityEngine.SocialPlatforms;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 5f;
-    public int waterCarried = 0;
+    public int waterCarried = 2;
     
     public AudioClip seedPickUpSound;
     private AudioSource playerAudio;
@@ -71,6 +71,7 @@ public class PlayerController : MonoBehaviour
 
     internal void UpdateWaterCarried(int amount)
     {
+        Debug.Log("updating water");
         waterCarried += amount;
     }
 }

@@ -52,7 +52,7 @@ public class FlowerManager : MonoBehaviour
         if (!other.CompareTag("Player")) return;
 
         // if player touches unseeded soil:
-        if (!seedPlanted)
+        if (!seedPlanted && gameManager.seedCount > 0) //TODO seed probs be in playercontroller
         {
             TryPlantSeed(other);
         }
@@ -62,7 +62,7 @@ public class FlowerManager : MonoBehaviour
             //    of making the birdCawSFX loop and change each time. 
             birdBehaviour.ScareAway();
         }
-        if (seedPlanted && playerController.waterCarried > 0)
+        else if (!isWatered && playerController.waterCarried > 0)
         {
             StartCoroutine(WaterPlant());            
         }
@@ -74,7 +74,16 @@ public class FlowerManager : MonoBehaviour
 
         gameManager.UpdateSeedCount(-1);
         PlaySound(plantSound);
-        SetSoilMaterial(seededMaterial);
+
+        if (isWatered)
+        {
+            SetSoilMaterial(wetSeededMaterial);
+        }
+        else
+        {
+            SetSoilMaterial(seededMaterial);
+        }
+        
         seedPlanted = true;
         StartCoroutine(Stage1_SeededState()); //TODO this shouldnt be coroutine, call CR within method
     }
@@ -103,7 +112,15 @@ public class FlowerManager : MonoBehaviour
         Debug.Log("in stage 2");
 
         isSapling = true;
-        SetSoilMaterial(soilPatchMaterial);
+        if (isWatered)
+        {
+            SetSoilMaterial(wetSoilPatchMaterial);
+        }
+        else
+        {
+            SetSoilMaterial(soilPatchMaterial);
+        }
+        
 
         int saplingIndex = Random.Range(0, saplingPrefabs.Length);
         saplingInstance = Instantiate(saplingPrefabs[saplingIndex], transform.position, Quaternion.identity);
@@ -115,31 +132,37 @@ public class FlowerManager : MonoBehaviour
             SpawnBird();
         }
         Debug.Log("no bird stage 2");
+        //if bug eats sapling, does gameobject get deleted?
     }
 
     private IEnumerator WaterPlant()
     {
+        //TODO stop watering when planting seeds
         Debug.Log("Watering plant");
-        if (!isWatered)
+        if (!seedPlanted)
         {
-            if (!isSapling)
-            {
-                Debug.Log("not sap");
-                isWatered = true;
-                playerController.UpdateWaterCarried(-1);
-                SetSoilMaterial(wetSeededMaterial);
-            }
-            else if (isSapling)
-            {
-                Debug.Log("is sap");
-                isWatered = true;
-                SetSoilMaterial(wetSoilPatchMaterial);
+            Debug.Log("not seed");
+            isWatered = true;
+            playerController.UpdateWaterCarried(-1);
+            SetSoilMaterial(wetSoilPatchMaterial);
+        }
+        else if (!isSapling)
+        {
+            Debug.Log("not sap");
+            isWatered = true;
+            playerController.UpdateWaterCarried(-1);
+            SetSoilMaterial(wetSeededMaterial);
+        }
+        else if (isSapling)
+        {
+            Debug.Log("is sap");
+            isWatered = true;
+            SetSoilMaterial(wetSoilPatchMaterial);
 
-                yield return new WaitForSeconds(stage2_SaplingGrowingTime);
+            yield return new WaitForSeconds(stage2_SaplingGrowingTime);
 
-                Stage3_FloweredState();
-            }
-        }           
+            Stage3_FloweredState();
+        }                   
     }
 
     private void SpawnBird()
