@@ -9,6 +9,8 @@ TagManager:
   - Flower
   - Hive
   - Ground
+  - Grass
+  - Water
   layers:
   - Default
   - TransparentFX

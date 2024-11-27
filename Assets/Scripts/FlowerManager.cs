@@ -18,8 +18,8 @@ public class FlowerManager : MonoBehaviour
 
     [Header("Timing Settings")]
     private float birdChance = 0.6f;
-    private float stage1_SeededGrowingTime = 10f; //TODO changed for testing purposes
-    private float stage2_SaplingGrowingTime = 10f; // TODO changed for testing purposes
+    private float stage1_SeededGrowingTime = 30f; //TODO changed for testing purposes
+    private float stage2_SaplingGrowingTime = 30f; // TODO changed for testing purposes
     private float birdSpawnTime = 3f;
 
     public bool seedPlanted = false;
@@ -131,12 +131,17 @@ public class FlowerManager : MonoBehaviour
             SpawnBird();
         }
         Debug.Log("no bird stage 2");
-        //if bug eats sapling, does gameobject get deleted?
+        
+        if (isWatered)
+        {
+            yield return new WaitForSeconds(stage2_SaplingGrowingTime);
+
+            Stage3_FloweredState();
+        }
     }
 
     private IEnumerator WaterPlant()
     {
-        //TODO stop watering when planting seeds
         Debug.Log("Watering plant");
         if (!seedPlanted)
         {
