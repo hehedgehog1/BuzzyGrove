@@ -24,6 +24,7 @@ public class FlowerManager : MonoBehaviour
 
     public bool seedPlanted = false;
     public bool isSapling = false;
+    public bool isFlower = false;
     public bool isWatered = false;
     public bool isBirdEating = false;
 
@@ -114,31 +115,31 @@ public class FlowerManager : MonoBehaviour
             SpawnBird();
         }
         Debug.Log("no bird stage 2");
-
-        //if (seedPlanted && isSapling && isWatered)
-        //{
-        //    yield return new WaitForSeconds(stage2_SaplingGrowingTime);
-        //    Stage3_FloweredState();
-        //}
     }
 
     private IEnumerator WaterPlant()
     {
         Debug.Log("Watering plant");
-        if (isSapling == false)
+        if (!isWatered)
         {
-            Debug.Log("not sap");
-            isWatered = true;
-            SetSoilMaterial(wetSeededMaterial);
-        }
-        else if (isSapling == true)
-        {
-            Debug.Log("is sap");
-            isWatered = true;
-            SetSoilMaterial(wetSoilPatchMaterial);
-            yield return new WaitForSeconds(stage2_SaplingGrowingTime);
-            Stage3_FloweredState();
-        }      
+            if (!isSapling)
+            {
+                Debug.Log("not sap");
+                isWatered = true;
+                playerController.UpdateWaterCarried(-1);
+                SetSoilMaterial(wetSeededMaterial);
+            }
+            else if (isSapling)
+            {
+                Debug.Log("is sap");
+                isWatered = true;
+                SetSoilMaterial(wetSoilPatchMaterial);
+
+                yield return new WaitForSeconds(stage2_SaplingGrowingTime);
+
+                Stage3_FloweredState();
+            }
+        }           
     }
 
     private void SpawnBird()
@@ -165,16 +166,20 @@ public class FlowerManager : MonoBehaviour
 
     private void Stage3_FloweredState()
     {
-        Destroy(saplingInstance.gameObject);
-        SetSoilMaterial(GroundMaterial);
+        if (!isFlower)
+        {
+            isFlower = true;            
+            Destroy(saplingInstance.gameObject);
+            SetSoilMaterial(GroundMaterial);
 
-        gameManager.UpdateFlowerCount(1);
-        Debug.Log("A flower has grown! Flower count: " + gameManager.flowerCount);
+            gameManager.UpdateFlowerCount(1);
+            Debug.Log("A flower has grown! Flower count: " + gameManager.flowerCount);
 
-        int flowerIndex = Random.Range(0, flowerPrefabs.Length);
-        Instantiate(flowerPrefabs[flowerIndex], new Vector3(transform.position.x, 0.8f, transform.position.z), Quaternion.identity);
+            int flowerIndex = Random.Range(0, flowerPrefabs.Length);
+            Instantiate(flowerPrefabs[flowerIndex], new Vector3(transform.position.x, 0.8f, transform.position.z), Quaternion.identity);
 
-        honeyProduction.StartMakingHoney();
+            honeyProduction.StartMakingHoney();
+        }        
     }
 
     private void SetSoilMaterial(Material material)

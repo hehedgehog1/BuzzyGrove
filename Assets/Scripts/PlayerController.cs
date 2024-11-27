@@ -67,5 +67,10 @@ public class PlayerController : MonoBehaviour
             playerAudio.PlayOneShot(seedPickUpSound, 1.0f);
             gameManager.UpdateSeedCount(1);            
         }
-    }  
+    }
+
+    internal void UpdateWaterCarried(int amount)
+    {
+        waterCarried += amount;
+    }
 }
