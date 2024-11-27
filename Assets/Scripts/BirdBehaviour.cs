@@ -26,6 +26,7 @@ public class BirdBehaviour : MonoBehaviour
     {
         PlaySound(birdCawSound);
         isEating = false;
+        flowerManager.isBirdEating = false;
         StopAllCoroutines();
         StartCoroutine(BirdFliesAway());
         
@@ -34,6 +35,7 @@ public class BirdBehaviour : MonoBehaviour
     private IEnumerator BirdWaitThenEat()
     {
         isEating = true;
+        flowerManager.isBirdEating = true;
         Debug.Log("A bird has appeared!");
 
         yield return new WaitForSeconds(birdEatingTime);

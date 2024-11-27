@@ -121,7 +121,6 @@ public class FlowerManager : MonoBehaviour
             SetSoilMaterial(soilPatchMaterial);
         }
         
-
         int saplingIndex = Random.Range(0, saplingPrefabs.Length);
         saplingInstance = Instantiate(saplingPrefabs[saplingIndex], transform.position, Quaternion.identity);
 
@@ -167,17 +166,21 @@ public class FlowerManager : MonoBehaviour
 
     private void SpawnBird()
     {
-        GameObject birdInstance = Instantiate(birdPrefab, new Vector3(transform.position.x, 0.5f, transform.position.z), Quaternion.identity);
-
-        birdBehaviour = birdInstance.GetComponent<BirdBehaviour>();
-        if (birdBehaviour != null)
+        if (!isBirdEating)
         {
-            birdBehaviour.Initialize(this);
-        }
+            GameObject birdInstance = Instantiate(birdPrefab, new Vector3(transform.position.x, 0.5f, transform.position.z), Quaternion.identity);
+
+            birdBehaviour = birdInstance.GetComponent<BirdBehaviour>();
+            if (birdBehaviour != null)
+            {
+                birdBehaviour.Initialize(this);
+            }
+        }        
     }
 
     public void OnBirdAteSeed()
     {
+        isBirdEating = false;
         seedPlanted = false;
         if (saplingInstance != null)
         {
