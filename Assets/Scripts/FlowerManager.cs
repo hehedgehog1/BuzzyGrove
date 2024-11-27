@@ -10,6 +10,7 @@ public class FlowerManager : MonoBehaviour
     public Material soilPatchMaterial;
     public Material wetSeededMaterial;
     public Material wetSoilPatchMaterial;
+    public Material GroundMaterial;
     public GameObject birdPrefab;
 
     [Header("Audio")]
@@ -62,7 +63,7 @@ public class FlowerManager : MonoBehaviour
         }
         if (seedPlanted && playerController.waterCarried > 0)
         {
-            WaterPlant();
+            StartCoroutine(WaterPlant());            
         }
     }
 
@@ -123,13 +124,16 @@ public class FlowerManager : MonoBehaviour
 
     private IEnumerator WaterPlant()
     {
+        Debug.Log("Watering plant");
         if (isSapling == false)
         {
+            Debug.Log("not sap");
             isWatered = true;
             SetSoilMaterial(wetSeededMaterial);
         }
         else if (isSapling == true)
         {
+            Debug.Log("is sap");
             isWatered = true;
             SetSoilMaterial(wetSoilPatchMaterial);
             yield return new WaitForSeconds(stage2_SaplingGrowingTime);
@@ -162,13 +166,13 @@ public class FlowerManager : MonoBehaviour
     private void Stage3_FloweredState()
     {
         Destroy(saplingInstance.gameObject);
-        SetSoilMaterial(null);
+        SetSoilMaterial(GroundMaterial);
 
         gameManager.UpdateFlowerCount(1);
         Debug.Log("A flower has grown! Flower count: " + gameManager.flowerCount);
 
         int flowerIndex = Random.Range(0, flowerPrefabs.Length);
-        Instantiate(flowerPrefabs[flowerIndex], transform.position, Quaternion.identity);
+        Instantiate(flowerPrefabs[flowerIndex], new Vector3(transform.position.x, 0.8f, transform.position.z), Quaternion.identity);
 
         honeyProduction.StartMakingHoney();
     }

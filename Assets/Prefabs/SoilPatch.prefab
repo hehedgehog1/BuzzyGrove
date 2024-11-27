@@ -147,7 +147,10 @@ MonoBehaviour:
   flowerPrefabs:
   - {fileID: 7064702629152981828, guid: 1571613f0800d0747a9b73ff62355c0f, type: 3}
   seededMaterial: {fileID: 2100000, guid: 5efe887d1b86ac84ebb06d15a7f41e68, type: 2}
-  defaultMaterial: {fileID: 2100000, guid: 67a27a65a8b533a428e7136c417a258d, type: 2}
+  soilPatchMaterial: {fileID: 2100000, guid: 67a27a65a8b533a428e7136c417a258d, type: 2}
+  wetSeededMaterial: {fileID: 2100000, guid: 3bfff2551e9b09f4da6ef63e388ebb9e, type: 2}
+  wetSoilPatchMaterial: {fileID: 2100000, guid: 5b2e744c10709014ebd88a285f916cd1, type: 2}
+  GroundMaterial: {fileID: 2100000, guid: be9482dd29825bb448067f5cf1eb7e7d, type: 2}
   birdPrefab: {fileID: 5828485548701876567, guid: 0dc615b3ec031554a8f460ed8ddf3b19, type: 3}
   plantSound: {fileID: 8300000, guid: 468a025b679a9de4b896daed303458de, type: 3}
   seedPlanted: 0
