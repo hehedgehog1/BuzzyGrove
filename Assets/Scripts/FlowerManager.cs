@@ -11,6 +11,7 @@ public class FlowerManager : MonoBehaviour
     public Material wetSeededMaterial;
     public Material wetSoilPatchMaterial;
     public Material GroundMaterial;
+    public Material flowerWiltedMaterial;
     public GameObject birdPrefab;
 
     [Header("Audio")]
@@ -21,6 +22,7 @@ public class FlowerManager : MonoBehaviour
     private float stage1_SeededGrowingTime = 30f; //TODO changed for testing purposes
     private float stage2_SaplingGrowingTime = 30f; // TODO changed for testing purposes
     private float birdSpawnTime = 3f;
+    private float timeTillFlowersWilt = 60f;
 
     public bool seedPlanted = false;
     public bool isSapling = false;
@@ -35,6 +37,7 @@ public class FlowerManager : MonoBehaviour
     private BirdBehaviour birdBehaviour;
     private PlayerController playerController;
     private GameObject saplingInstance;
+    private GameObject flowerInstance;
 
     void Start()
     {
@@ -72,7 +75,6 @@ public class FlowerManager : MonoBehaviour
             StartCoroutine(WaterPlant());
         }
     }
-
 
     private void TryPlantSeed(Collider other)
     {
@@ -205,7 +207,8 @@ public class FlowerManager : MonoBehaviour
     {
         if (!isFlower)
         {
-            isFlower = true;            
+            isFlower = true;
+            isWatered = false;
             Destroy(saplingInstance.gameObject);
             SetSoilMaterial(GroundMaterial);
 
@@ -213,10 +216,34 @@ public class FlowerManager : MonoBehaviour
             Debug.Log("A flower has grown! Flower count: " + gameManager.flowerCount);
 
             int flowerIndex = Random.Range(0, flowerPrefabs.Length);
-            Instantiate(flowerPrefabs[flowerIndex], new Vector3(transform.position.x, 0.8f, transform.position.z), Quaternion.identity);
+            flowerInstance = Instantiate(flowerPrefabs[flowerIndex], new Vector3(transform.position.x, 0.8f, transform.position.z), Quaternion.identity);
 
             honeyProduction.StartMakingHoney();
-        }        
+
+            StartCoroutine(CheckFlowersWatered());
+        }
+    }
+
+    private IEnumerator CheckFlowersWatered()
+    {
+        while (!gameManager.gameOver)
+        {
+            yield return new WaitForSeconds(timeTillFlowersWilt);
+
+            if (isWatered)
+            {
+                isWatered = false;
+                continue;
+            }
+            else
+            {                
+                Debug.Log("A flower wilted and died.");
+                gameManager.UpdateFlowerCount(-1);
+                Destroy(flowerInstance.gameObject);
+                Destroy(gameObject);                               
+                yield break;                
+            }
+        }
     }
 
     private void SetSoilMaterial(Material material)

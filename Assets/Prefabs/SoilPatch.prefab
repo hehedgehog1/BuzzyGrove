@@ -151,10 +151,12 @@ MonoBehaviour:
   wetSeededMaterial: {fileID: 2100000, guid: 3bfff2551e9b09f4da6ef63e388ebb9e, type: 2}
   wetSoilPatchMaterial: {fileID: 2100000, guid: 5b2e744c10709014ebd88a285f916cd1, type: 2}
   GroundMaterial: {fileID: 2100000, guid: be9482dd29825bb448067f5cf1eb7e7d, type: 2}
+  flowerWiltedMaterial: {fileID: 2100000, guid: 90c99e8ca9de79e4fa70ad7da51518e8, type: 2}
   birdPrefab: {fileID: 5828485548701876567, guid: 0dc615b3ec031554a8f460ed8ddf3b19, type: 3}
   plantSound: {fileID: 8300000, guid: 468a025b679a9de4b896daed303458de, type: 3}
   seedPlanted: 0
   isSapling: 0
+  isFlower: 0
   isWatered: 0
   isBirdEating: 0
 --- !u!82 &-1384228493751601704

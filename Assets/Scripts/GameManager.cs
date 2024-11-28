@@ -81,6 +81,7 @@ public class GameManager : MonoBehaviour
     {
         honeyCount += honeyToAdd;
         uiManager.UpdateHoneyText();
+        Debug.Log("Honey produced! Total honey: " + honeyCount);
     }
 
     public void UpdateFlowerCount(int flowerToAdd)

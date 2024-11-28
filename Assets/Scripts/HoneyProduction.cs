@@ -41,9 +41,20 @@ public class HoneyProduction : MonoBehaviour
 
             int activeFlowers = gameManager.flowerCount;
 
-            gameManager.UpdateHoneyCount(activeFlowers);
-            honeyAudio.PlayOneShot(newHoneySound, 1.0f);
-            Debug.Log("Honey produced! Total honey: " + gameManager.honeyCount);
+            if (activeFlowers == 0)
+            {
+                continue;
+            }
+            else if (activeFlowers > 9)
+            {
+                gameManager.UpdateHoneyCount(activeFlowers/3);
+                honeyAudio.PlayOneShot(newHoneySound, 1.0f);
+            }
+            else
+            {
+                gameManager.UpdateHoneyCount(activeFlowers);
+                honeyAudio.PlayOneShot(newHoneySound, 1.0f);
+            }    
         }
 
         isMakingHoney = false;
