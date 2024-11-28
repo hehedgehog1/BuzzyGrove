@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class HoneyProduction : MonoBehaviour
 {
-    public float timeToHoney = 20f;
+    private bool isMakingHoney = false;
+    public float timeToHoney = 25f;
     private const float minTimeToHoney = 5f;
     private const float timeReduction = 5f; // 5s time reduction    
     private GameManager gameManager;
@@ -19,30 +20,32 @@ public class HoneyProduction : MonoBehaviour
         honeyAudio = GetComponent<AudioSource>();
     }
 
+    private void Update()
+    {   
+    }
+
     public void StartMakingHoney()
     {
-        //TODO: Honey is only made once per flower. This should probably be continuously while flowers exist.
-        Debug.Log("Honey Started");
-        StartCoroutine(ProduceHoney());
-
-        //// Time taken to produce honey is reduced per flower added
-        //timeToHoney *= (1 - timeReduction);
-
-        //// Minimum time is 5 seconds
-        //timeToHoney = Mathf.Max(timeToHoney, minTimeToHoney);
-
-        //Debug.Log("Honey production time now: " + timeToHoney + " seconds");
+        if (!isMakingHoney)
+        {
+            isMakingHoney = true;
+            StartCoroutine(ProduceHoney());
+        }
     }
 
     private IEnumerator ProduceHoney()
     {
-        yield return new WaitForSeconds(timeToHoney);
-
-        if (!gameManager.gameOver)
+        while (!gameManager.gameOver) 
         {
-            gameManager.UpdateHoneyCount(1);
+            yield return new WaitForSeconds(timeToHoney);
+
+            int activeFlowers = gameManager.flowerCount;
+
+            gameManager.UpdateHoneyCount(activeFlowers);
             honeyAudio.PlayOneShot(newHoneySound, 1.0f);
             Debug.Log("Honey produced! Total honey: " + gameManager.honeyCount);
         }
+
+        isMakingHoney = false;
     }
 }

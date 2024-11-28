@@ -5,7 +5,7 @@ public class BirdBehaviour : MonoBehaviour
 {
     public AudioClip birdCawSound;
 
-    private float birdEatingTime = 20f;
+    private float birdEatingTime = 15f;
     private FlowerManager flowerManager;
     private AudioSource audioSource;
 
@@ -68,7 +68,7 @@ public class BirdBehaviour : MonoBehaviour
 
     private void PlaySound(AudioClip clip)
     {
-        if (audioSource != null && clip != null)
+        if (audioSource != null && clip != null && !audioSource.isPlaying)
         {
             audioSource.PlayOneShot(clip, 1.0f);
         }
