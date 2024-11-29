@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
     internal void UpdateWaterCarried(int amount)
     {
         waterCarried += amount;
-        Debug.Log("Water increased. Water carried: " + waterCarried);
+        uiManager.UpdateWaterText();
     }
 
     internal void UpdateSeedCount(int seedToAdd)

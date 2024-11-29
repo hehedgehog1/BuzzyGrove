@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI seedText;
     public TextMeshProUGUI timeOfDayText;
     public TextMeshProUGUI honeyText;
+    public TextMeshProUGUI waterText;
     private GameManager gameManager;
     private PlayerController playerController;
 
@@ -32,5 +33,10 @@ public class UIManager : MonoBehaviour
     internal void UpdateHoneyText()
     {
         honeyText.text = "Honey: " + gameManager.honeyCount;
+    }
+
+    internal void UpdateWaterText()
+    {
+        waterText.text = "Water: " + playerController.waterCarried;
     }
 }
