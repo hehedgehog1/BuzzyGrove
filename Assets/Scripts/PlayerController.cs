@@ -6,7 +6,7 @@ using UnityEngine.SocialPlatforms;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 5f;
+    public float speed = 9f;
     public int waterCarried = 0;
     public int seedCount = 0;    
 
@@ -73,8 +73,23 @@ public class PlayerController : MonoBehaviour
 
     internal void UpdateWaterCarried(int amount)
     {
-        waterCarried += amount;
+        waterCarried += amount;        
         uiManager.UpdateWaterText();
+
+        //change speed 7-9 depending on how much water carried
+        if (waterCarried <= 1)
+        {
+            speed = 9f;
+        }
+        else if (waterCarried > 1 && waterCarried < 5)
+        {
+            speed = 8f;
+        }
+        else
+        {
+            speed = 7f;
+        }
+
     }
 
     internal void UpdateSeedCount(int seedToAdd)
