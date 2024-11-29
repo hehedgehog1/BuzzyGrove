@@ -53,16 +53,19 @@ public class FlowerManager : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
 
-        // if player touches unseeded soil:
-        if (!seedPlanted && gameManager.seedCount > 0) //TODO seed probs be in playercontroller
-        {
-            TryPlantSeed(other);
-        }
-        else if (birdBehaviour != null)
+        if (seedPlanted && birdBehaviour != null)
         {
             //NB: Moved scare trigger here, instead of in BirdBehaviour, because it has a fun side effect 
             //    of making the birdCawSFX loop and change each time. 
             birdBehaviour.ScareAway();
+        }
+    }
+
+    private void OnMouseDown()
+    {
+        if (!seedPlanted && gameManager.seedCount > 0)
+        {
+            TryPlantSeed();
         }
     }
 
@@ -75,7 +78,7 @@ public class FlowerManager : MonoBehaviour
         }
     }
 
-    private void TryPlantSeed(Collider other)
+    private void TryPlantSeed()
     {
         if (gameManager.seedCount <= 0) return;
 
