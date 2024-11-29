@@ -204,7 +204,9 @@ public class FlowerManager : MonoBehaviour
         if (!isFlower)
         {
             isFlower = true;
+            seedPlanted = true;
             Destroy(saplingInstance.gameObject);
+            SetSoilMaterial(GroundMaterial);            
 
             gameManager.UpdateFlowerCount(1);
             Debug.Log("A flower has grown! Flower count: " + gameManager.flowerCount);
