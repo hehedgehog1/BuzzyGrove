@@ -11,7 +11,6 @@ public class FlowerManager : MonoBehaviour
     public Material wetSeededMaterial;
     public Material wetSoilPatchMaterial;
     public Material GroundMaterial;
-    public Material flowerWiltedMaterial;
     public GameObject birdPrefab;
 
     [Header("Audio")]
@@ -19,8 +18,8 @@ public class FlowerManager : MonoBehaviour
 
     [Header("Timing Settings")]
     private float birdChance = 0.6f;
-    private float stage1_SeededGrowingTime = 30f; //TODO changed for testing purposes
-    private float stage2_SaplingGrowingTime = 30f; // TODO changed for testing purposes
+    private float stage1_SeededGrowingTime = 30f;
+    private float stage2_SaplingGrowingTime = 30f;
     private float birdSpawnTime = 3f;
     private float timeTillFlowersWilt = 60f;
 
@@ -70,7 +69,7 @@ public class FlowerManager : MonoBehaviour
     void OnMouseOver()
     {
         // Check if the right mouse button is clicked
-        if (Input.GetMouseButtonDown(1) && !isWatered && playerController.waterCarried > 0)
+        if (Input.GetMouseButtonDown(1) && !isWatered && !isFlower && playerController.waterCarried > 0)
         {
             StartCoroutine(WaterPlant());
         }
@@ -208,43 +207,19 @@ public class FlowerManager : MonoBehaviour
         if (!isFlower)
         {
             isFlower = true;
-            isWatered = false;
             Destroy(saplingInstance.gameObject);
-            SetSoilMaterial(GroundMaterial);
 
             gameManager.UpdateFlowerCount(1);
             Debug.Log("A flower has grown! Flower count: " + gameManager.flowerCount);
 
             int flowerIndex = Random.Range(0, flowerPrefabs.Length);
-            flowerInstance = Instantiate(flowerPrefabs[flowerIndex], new Vector3(transform.position.x, 0.8f, transform.position.z), Quaternion.identity);
+            Instantiate(flowerPrefabs[flowerIndex], new Vector3(transform.position.x, 0.8f, transform.position.z), Quaternion.identity);
 
-            honeyProduction.StartMakingHoney();
+            Debug.Log("flower finished growing");
+            StartCoroutine(honeyProduction.MakeHoney());
 
-            StartCoroutine(CheckFlowersWatered());
         }
-    }
-
-    private IEnumerator CheckFlowersWatered()
-    {
-        while (!gameManager.gameOver)
-        {
-            yield return new WaitForSeconds(timeTillFlowersWilt);
-
-            if (isWatered)
-            {
-                isWatered = false;
-                continue;
-            }
-            else
-            {                
-                Debug.Log("A flower wilted and died.");
-                gameManager.UpdateFlowerCount(-1);
-                Destroy(flowerInstance.gameObject);
-                Destroy(gameObject);                               
-                yield break;                
-            }
-        }
-    }
+    }    
 
     private void SetSoilMaterial(Material material)
     {
