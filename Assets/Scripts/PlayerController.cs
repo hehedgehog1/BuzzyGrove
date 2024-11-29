@@ -8,20 +8,22 @@ public class PlayerController : MonoBehaviour
 {
     public float speed = 5f;
     public int waterCarried = 0;
-    
-    public AudioClip seedPickUpSound;
-    private AudioSource playerAudio;
-    
+    public int seedCount = 0;    
+
     private float xRange = 50.0f;
     private float zRange = 50.0f;
-    private GameManager gameManager;
 
+    public AudioClip seedPickUpSound;
+    private AudioSource playerAudio;
+    private GameManager gameManager;
+    private UIManager uiManager;
 
     // Start is called before the first frame update
     void Start()
     {
         playerAudio = GetComponent<AudioSource>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        uiManager = FindObjectOfType<UIManager>();
     }
 
     void Update()
@@ -65,18 +67,24 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Seed"))
         {
             playerAudio.PlayOneShot(seedPickUpSound, 1.0f);
-            gameManager.UpdateSeedCount(1);            
+            UpdateSeedCount(1);            
         }
         else if (collision.gameObject.CompareTag("Water") && waterCarried < 5)
         {
-            waterCarried += 1;
-            Debug.Log("Water increased. Water carried: " + waterCarried);
+            //TODO: water audio sfx
+            UpdateWaterCarried(1);
         }
     }
 
     internal void UpdateWaterCarried(int amount)
     {
-        Debug.Log("updating water");
         waterCarried += amount;
+        Debug.Log("Water increased. Water carried: " + waterCarried);
+    }
+
+    internal void UpdateSeedCount(int seedToAdd)
+    {
+        seedCount += seedToAdd;
+        uiManager.UpdateSeedText();
     }
 }

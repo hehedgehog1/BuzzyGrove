@@ -25,17 +25,19 @@ public class BirdBehaviour : MonoBehaviour
     public void ScareAway()
     {
         PlaySound(birdCawSound);
+
         isEating = false;
         flowerManager.isBirdEating = false;
+
         StopAllCoroutines();
-        StartCoroutine(BirdFliesAway());
-        
+        StartCoroutine(BirdFliesAway());        
     }
 
     private IEnumerator BirdWaitThenEat()
     {
         isEating = true;
         flowerManager.isBirdEating = true;
+
         Debug.Log("A bird has appeared!");
 
         yield return new WaitForSeconds(birdEatingTime);
@@ -43,6 +45,7 @@ public class BirdBehaviour : MonoBehaviour
         if (flowerManager.seedPlanted && isEating)
         {
             Debug.Log("A bird ate a seed!");
+
             flowerManager.OnBirdAteSeed();
             Destroy(gameObject);
         }

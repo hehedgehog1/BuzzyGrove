@@ -16,7 +16,6 @@ public class SpawnManager : MonoBehaviour
     private float minSpawnDistance = 2.0f;
     private GameManager gameManager;
 
-    // Start is called before the first frame update
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -56,7 +55,6 @@ public class SpawnManager : MonoBehaviour
             return;
         }
 
-        //TODO: Update how often Grass patches get spawned
         Vector3 spawnPos;
 
         // Try finding a valid spawn position

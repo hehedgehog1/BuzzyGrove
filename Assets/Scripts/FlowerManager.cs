@@ -18,10 +18,9 @@ public class FlowerManager : MonoBehaviour
 
     [Header("Timing Settings")]
     private float birdChance = 0.6f;
-    private float stage1_SeededGrowingTime = 30f;
+    private float stage1_SeededGrowingTime = 40f;
     private float stage2_SaplingGrowingTime = 30f;
     private float birdSpawnTime = 3f;
-    private float timeTillFlowersWilt = 60f;
 
     public bool seedPlanted = false;
     public bool isSapling = false;
@@ -61,9 +60,9 @@ public class FlowerManager : MonoBehaviour
         }
     }
 
-    private void OnMouseDown()
+    void OnMouseDown()
     {
-        if (!seedPlanted && gameManager.seedCount > 0)
+        if (!seedPlanted && playerController.seedCount > 0)
         {
             TryPlantSeed();
         }
@@ -78,11 +77,11 @@ public class FlowerManager : MonoBehaviour
         }
     }
 
-    private void TryPlantSeed()
+    void TryPlantSeed()
     {
-        if (gameManager.seedCount <= 0) return;
+        if (playerController.seedCount <= 0) return;
 
-        gameManager.UpdateSeedCount(-1);
+        playerController.UpdateSeedCount(-1);
         PlaySound(plantSound);
 
         if (isWatered)
@@ -95,21 +94,18 @@ public class FlowerManager : MonoBehaviour
         }
         
         seedPlanted = true;
-        StartCoroutine(Stage1_SeededState()); //TODO this shouldnt be coroutine, call CR within method
+        StartCoroutine(Stage1_SeededState());
     }
 
     private IEnumerator Stage1_SeededState()
     {
         if (Random.value < birdChance)
         {
-            Debug.Log("Yes bird");
             yield return new WaitForSeconds(birdSpawnTime);
             SpawnBird();
         }
-        Debug.Log("No bird");
 
         yield return new WaitForSeconds(stage1_SeededGrowingTime);
-        Debug.Log("done stage 1");
 
         if (seedPlanted)
         {
@@ -119,9 +115,8 @@ public class FlowerManager : MonoBehaviour
 
     private IEnumerator Stage2_SaplingState()
     {
-        Debug.Log("in stage 2");
-
         isSapling = true;
+
         if (isWatered)
         {
             SetSoilMaterial(wetSoilPatchMaterial);
@@ -136,11 +131,10 @@ public class FlowerManager : MonoBehaviour
 
         if (Random.value < birdChance)
         {
-            Debug.Log("yes bird stage 2");
             yield return new WaitForSeconds(birdSpawnTime);
+            
             SpawnBird();
         }
-        Debug.Log("no bird stage 2");
         
         if (isWatered)
         {
@@ -152,24 +146,22 @@ public class FlowerManager : MonoBehaviour
 
     private IEnumerator WaterPlant()
     {
-        Debug.Log("Watering plant");
         if (!seedPlanted)
         {
-            Debug.Log("not seed");
             isWatered = true;
             playerController.UpdateWaterCarried(-1);
+            
             SetSoilMaterial(wetSoilPatchMaterial);
         }
         else if (!isSapling)
         {
-            Debug.Log("not sap");
             isWatered = true;
             playerController.UpdateWaterCarried(-1);
+            
             SetSoilMaterial(wetSeededMaterial);
         }
         else if (isSapling)
         {
-            Debug.Log("is sap");
             isWatered = true;
             SetSoilMaterial(wetSoilPatchMaterial);
 
@@ -184,8 +176,8 @@ public class FlowerManager : MonoBehaviour
         if (!isBirdEating)
         {
             GameObject birdInstance = Instantiate(birdPrefab, new Vector3(transform.position.x, 0.5f, transform.position.z), Quaternion.identity);
-
             birdBehaviour = birdInstance.GetComponent<BirdBehaviour>();
+            
             if (birdBehaviour != null)
             {
                 birdBehaviour.Initialize(this);
@@ -197,11 +189,13 @@ public class FlowerManager : MonoBehaviour
     {
         isBirdEating = false;
         seedPlanted = false;
+
         if (saplingInstance != null)
         {
             isSapling = false;
             Destroy(saplingInstance.gameObject);
         }
+
         SetSoilMaterial(soilPatchMaterial);
     }
 
@@ -218,7 +212,6 @@ public class FlowerManager : MonoBehaviour
             int flowerIndex = Random.Range(0, flowerPrefabs.Length);
             Instantiate(flowerPrefabs[flowerIndex], new Vector3(transform.position.x, 0.8f, transform.position.z), Quaternion.identity);
 
-            Debug.Log("flower finished growing");
             StartCoroutine(honeyProduction.MakeHoney());
 
         }

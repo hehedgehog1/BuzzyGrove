@@ -11,15 +11,10 @@ public class HoneyProduction : MonoBehaviour
     public AudioClip newHoneySound;
     private AudioSource honeyAudio;
 
-    // Start is called before the first frame update
     void Start()
     {
         gameManager = gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         honeyAudio = GetComponent<AudioSource>();
-    }
-
-    private void Update()
-    {   
     }
 
     public IEnumerator MakeHoney()
