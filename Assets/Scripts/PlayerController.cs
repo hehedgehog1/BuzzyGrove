@@ -69,11 +69,6 @@ public class PlayerController : MonoBehaviour
             playerAudio.PlayOneShot(seedPickUpSound, 1.0f);
             UpdateSeedCount(1);            
         }
-        else if (collision.gameObject.CompareTag("Water") && waterCarried < 5)
-        {
-            //TODO: water audio sfx
-            UpdateWaterCarried(1);
-        }
     }
 
     internal void UpdateWaterCarried(int amount)

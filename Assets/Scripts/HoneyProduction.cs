@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class HoneyProduction : MonoBehaviour
 {
-    private bool isMakingHoney = false;
     public float timeToHoney = 5f; 
     private GameManager gameManager;
 
