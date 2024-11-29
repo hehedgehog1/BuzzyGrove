@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,11 +11,11 @@ public class GameManager : MonoBehaviour
     public string timeOfDay = "";
     public bool gameOver = false;
     private UIManager uiManager;
+    public Button newDayButton;
 
     public int flowerCount = 0;
     public int honeyCount = 0;
 
-    // Start is called before the first frame update
     void Start()
     {
         uiManager = FindObjectOfType<UIManager>();
@@ -23,7 +24,6 @@ public class GameManager : MonoBehaviour
         daySegmentLength = dayLength / 3;
     }
 
-    // Update is called once per frame
     void Update()
     {
         UpdateDayLeft();
@@ -86,5 +86,6 @@ public class GameManager : MonoBehaviour
     {
         gameOver = true;
         Debug.Log("Day has ended! HoneyCount = " + honeyCount);
+        newDayButton.gameObject.SetActive(true);
     }
 }
