@@ -36,12 +36,14 @@ public class FlowerManager : MonoBehaviour
     private PlayerController playerController;
     private GameObject saplingInstance;
     private GameObject flowerInstance;
+    public GameObject player;
 
     void Start()
     {
         plantAudio = GetComponent<AudioSource>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        player = GameObject.Find("Player");
         honeyProduction = FindObjectOfType<HoneyProduction>();
         soilRenderer = GetComponent<Renderer>();
 
@@ -180,7 +182,7 @@ public class FlowerManager : MonoBehaviour
             
             if (birdBehaviour != null)
             {
-                birdBehaviour.Initialize(this);
+                birdBehaviour.Initialize(this, player.transform);
             }
         }        
     }

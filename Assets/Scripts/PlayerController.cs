@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public float speed = 9f;
     public int waterCarried = 0;
     public int seedCount = 0;    
+    public bool isStunned = false;
 
     private float xRange = 50.0f;
     private float zRange = 50.0f;
@@ -76,25 +77,51 @@ public class PlayerController : MonoBehaviour
         waterCarried += amount;        
         uiManager.UpdateWaterText();
 
-        //change speed 7-9 depending on how much water carried
-        if (waterCarried <= 1)
-        {
-            speed = 9f;
-        }
-        else if (waterCarried > 1 && waterCarried < 5)
-        {
-            speed = 8f;
-        }
-        else
-        {
-            speed = 7f;
-        }
-
+        CalculateSpeed();
     }
 
     internal void UpdateSeedCount(int seedToAdd)
     {
         seedCount += seedToAdd;
         uiManager.UpdateSeedText();
+    }
+
+    internal IEnumerator CaughtByBird()
+    {
+        isStunned = true;
+        Debug.Log("is stunned");
+        speed = 3f;
+
+        yield return new WaitForSeconds(3f);
+
+        isStunned = false;
+        Debug.Log("not stunned");
+        CalculateSpeed();
+    }
+
+    void CalculateSpeed()
+    {
+        if (!isStunned)
+        {
+            //change speed 7-9 depending on how much water carried
+            if (waterCarried <= 1)
+            {
+
+                Debug.Log("here1");
+                speed = 9f;
+            }
+            else if (waterCarried > 1 && waterCarried < 5)
+            {
+
+                Debug.Log("here2");
+                speed = 8f;
+            }
+            else
+            {
+
+                Debug.Log("here3");
+                speed = 7f;
+            }
+        }        
     }
 }
