@@ -86,17 +86,17 @@ public class PlayerController : MonoBehaviour
         uiManager.UpdateSeedText();
     }
 
-    internal IEnumerator CaughtByBird()
+    internal void CaughtByBird()
     {
         isStunned = true;
         Debug.Log("is stunned");
-        speed = 3f;
+        // speed = 3f;
 
-        yield return new WaitForSeconds(3f);
+        //yield return new WaitForSeconds(3f);
 
-        isStunned = false;
-        Debug.Log("not stunned");
-        CalculateSpeed();
+        //isStunned = false;
+        //Debug.Log("not stunned");
+        //CalculateSpeed();
     }
 
     void CalculateSpeed()

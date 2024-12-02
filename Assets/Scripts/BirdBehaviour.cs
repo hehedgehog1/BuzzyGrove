@@ -6,7 +6,7 @@ public class BirdBehaviour : MonoBehaviour
     public AudioClip birdCawSound;
 
     private float birdEatingTime = 15f;
-    private float hostileChance = 1f;
+    private float hostileChance = 0.3f;
     private FlowerManager flowerManager;
     private AudioSource audioSource;
     private Transform player;
@@ -39,7 +39,7 @@ public class BirdBehaviour : MonoBehaviour
 
         if (isChasingPlayer == true && canCatch == true)
         {
-            StartCoroutine(playerController.CaughtByBird());
+            playerController.CaughtByBird();
             StartCoroutine(BirdFliesAway());            
         }
     }
