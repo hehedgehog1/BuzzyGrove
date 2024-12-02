@@ -21,6 +21,7 @@ public class HoneyProduction : MonoBehaviour
         Debug.Log("Making honey...");
         yield return new WaitForSeconds(timeToHoney);
         Debug.Log("Honey making finished...");
+        honeyAudio.PlayOneShot(newHoneySound, 1.0f);
         gameManager.UpdateHoneyCount(1);
     }
 
