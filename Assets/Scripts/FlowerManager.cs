@@ -81,7 +81,7 @@ public class FlowerManager : MonoBehaviour
 
     void TryPlantSeed()
     {
-        if (playerController.seedCount <= 0) return;
+        if (playerController.seedCount <= 0 || IsSpaceOccupied()) return;
 
         playerController.UpdateSeedCount(-1);
         PlaySound(plantSound);
@@ -94,7 +94,7 @@ public class FlowerManager : MonoBehaviour
         {
             SetSoilMaterial(seededMaterial);
         }
-        
+
         seedPlanted = true;
         StartCoroutine(Stage1_SeededState());
     }
@@ -117,6 +117,8 @@ public class FlowerManager : MonoBehaviour
 
     private IEnumerator Stage2_SaplingState()
     {
+        if (gameManager.gameOver) yield break;
+
         isSapling = true;
 
         if (isWatered)
@@ -127,22 +129,27 @@ public class FlowerManager : MonoBehaviour
         {
             SetSoilMaterial(soilPatchMaterial);
         }
-        
-        int saplingIndex = Random.Range(0, saplingPrefabs.Length);
-        saplingInstance = Instantiate(saplingPrefabs[saplingIndex], transform.position, Quaternion.identity);
+
+        if (!IsSpaceOccupied()) //Check space is clear before spawning the sapling
+        {
+            int saplingIndex = Random.Range(0, saplingPrefabs.Length);
+            saplingInstance = Instantiate(saplingPrefabs[saplingIndex], transform.position, Quaternion.identity);
+        }
 
         if (Random.value < birdChance)
         {
             yield return new WaitForSeconds(birdSpawnTime);
-            
             SpawnBird();
         }
-        
+
         if (isWatered)
         {
             yield return new WaitForSeconds(stage2_SaplingGrowingTime);
 
-            Stage3_FloweredState();
+            if (!gameManager.gameOver)
+            {
+                Stage3_FloweredState();
+            }
         }
     }
 
@@ -175,16 +182,18 @@ public class FlowerManager : MonoBehaviour
 
     private void SpawnBird()
     {
-        if (!isBirdEating)
+        if (isBirdEating || gameManager.gameOver)
         {
-            GameObject birdInstance = Instantiate(birdPrefab, new Vector3(transform.position.x, 0.5f, transform.position.z), Quaternion.identity);
-            birdBehaviour = birdInstance.GetComponent<BirdBehaviour>();
-            
-            if (birdBehaviour != null)
-            {
-                birdBehaviour.Initialize(this, player.transform);
-            }
-        }        
+            return;
+        }
+
+        GameObject birdInstance = Instantiate(birdPrefab, new Vector3(transform.position.x, 0.5f, transform.position.z), Quaternion.identity);
+        birdBehaviour = birdInstance.GetComponent<BirdBehaviour>();
+
+        if (birdBehaviour != null)
+        {
+            birdBehaviour.Initialize(this, player.transform);
+        }
     }
 
     public void OnBirdAteSeed()
@@ -203,12 +212,20 @@ public class FlowerManager : MonoBehaviour
 
     private void Stage3_FloweredState()
     {
-        if (!isFlower)
+        if (gameManager.gameOver) return;
+
+        if (!isFlower && !IsSpaceOccupied()) 
         {
             isFlower = true;
             seedPlanted = true;
-            Destroy(saplingInstance.gameObject);
-            SetSoilMaterial(GroundMaterial);            
+
+            if (saplingInstance != null)
+            {
+                Destroy(saplingInstance.gameObject);
+            }
+            StopAllCoroutines();
+
+            SetSoilMaterial(GroundMaterial);
 
             gameManager.UpdateFlowerCount(1);
             Debug.Log("A flower has grown! Flower count: " + gameManager.flowerCount);
@@ -217,9 +234,21 @@ public class FlowerManager : MonoBehaviour
             Instantiate(flowerPrefabs[flowerIndex], new Vector3(transform.position.x, 0.8f, transform.position.z), Quaternion.identity);
 
             StartCoroutine(honeyProduction.MakeHoney());
-
         }
-    }    
+    }
+
+    private bool IsSpaceOccupied()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f);
+        foreach (Collider collider in colliders)
+        {
+            if (collider.CompareTag("Flower") || collider.CompareTag("Sapling") || collider.CompareTag("Soil"))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     private void SetSoilMaterial(Material material)
     {

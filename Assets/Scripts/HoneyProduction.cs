@@ -18,9 +18,12 @@ public class HoneyProduction : MonoBehaviour
 
     public IEnumerator MakeHoney()
     {
+        if (gameManager.gameOver) yield break;
+
         Debug.Log("Making honey...");
         yield return new WaitForSeconds(timeToHoney);
         Debug.Log("Honey making finished...");
+
         honeyAudio.PlayOneShot(newHoneySound, 1.0f);
         gameManager.UpdateHoneyCount(1);
     }
