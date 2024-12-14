@@ -8,7 +8,7 @@ public class SpawnManager : MonoBehaviour
     public GameObject grassPatchPrefab;
     private int seedCount = 0;
     private int grassPatchCount = 0;
-    private int spawnLimit = 50;
+    private int spawnLimit = 30;
     private float spawnRangeX = 50;
     private float spawnRangeZ = 50;
     private float startDelay = 5;
@@ -29,7 +29,7 @@ public class SpawnManager : MonoBehaviour
         {
             InvokeRepeating("SpawnGrassPatch", startDelay, spawnInterval);
             grassPatchCount++;
-        }   
+        }
     }
 
     void SpawnSeed()
@@ -41,10 +41,32 @@ public class SpawnManager : MonoBehaviour
         }
 
         int seedIndex = Random.Range(0, seedPrefabs.Length);
-        Vector3 spawnPos = new Vector3(Random.Range(-spawnRangeX, spawnRangeX), 0, Random.Range(-spawnRangeZ, spawnRangeZ));
+        Vector3 spawnPos;
 
-        Instantiate(seedPrefabs[seedIndex], spawnPos, seedPrefabs[seedIndex].transform.rotation);
+        // Try finding a valid spawn position
+        bool validPositionFound = false;
+        int attempts = 0;
 
+        do
+        {
+            spawnPos = new Vector3(Random.Range(-spawnRangeX, spawnRangeX), 0, Random.Range(-spawnRangeZ, spawnRangeZ));
+
+            validPositionFound = IsValidSpawnPosition(spawnPos);
+            attempts++;
+
+            // Prevent infinite loop
+            if (attempts >= 100) break;
+
+        } while (!validPositionFound);
+
+        if (validPositionFound)
+        {
+            Instantiate(seedPrefabs[seedIndex], spawnPos, seedPrefabs[seedIndex].transform.rotation);
+        }
+        else
+        {
+            Debug.LogWarning("Could not find a valid spawn position for a seed after multiple attempts.");
+        }
     }
 
     void SpawnGrassPatch()
@@ -79,7 +101,7 @@ public class SpawnManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Could not find a valid spawn position after multiple attempts.");
+            Debug.LogWarning("Could not find a valid spawn position for a grass patch after multiple attempts.");
         }
     }
 

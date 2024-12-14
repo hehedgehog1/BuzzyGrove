@@ -19,7 +19,7 @@ public class FlowerManager : MonoBehaviour
     [Header("Timing Settings")]
     private float birdChance = 0.6f;
     private float stage1_SeededGrowingTime = 40f;
-    private float stage2_SaplingGrowingTime = 30f;
+    private float stage2_SaplingGrowingTime = 40f;
     private float birdSpawnTime = 3f;
 
     public bool seedPlanted = false;
@@ -64,7 +64,7 @@ public class FlowerManager : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (!seedPlanted && playerController.seedCount > 0)
+        if (IsPlayerNearby() && !seedPlanted && playerController.seedCount > 0)
         {
             TryPlantSeed();
         }
@@ -73,7 +73,7 @@ public class FlowerManager : MonoBehaviour
     void OnMouseOver()
     {
         // Check if the right mouse button is clicked
-        if (Input.GetMouseButtonDown(1) && !isWatered && !isFlower && playerController.waterCarried > 0)
+        if (Input.GetMouseButtonDown(1) && IsPlayerNearby() && !isWatered && !isFlower && !isBirdEating && playerController.waterCarried > 0)
         {
             StartCoroutine(WaterPlant());
         }
@@ -81,7 +81,7 @@ public class FlowerManager : MonoBehaviour
 
     void TryPlantSeed()
     {
-        if (playerController.seedCount <= 0 || IsSpaceOccupied()) return;
+        if (playerController.seedCount <= 0) return;
 
         playerController.UpdateSeedCount(-1);
         PlaySound(plantSound);
@@ -130,11 +130,8 @@ public class FlowerManager : MonoBehaviour
             SetSoilMaterial(soilPatchMaterial);
         }
 
-        if (!IsSpaceOccupied()) //Check space is clear before spawning the sapling
-        {
-            int saplingIndex = Random.Range(0, saplingPrefabs.Length);
-            saplingInstance = Instantiate(saplingPrefabs[saplingIndex], transform.position, Quaternion.identity);
-        }
+        int saplingIndex = Random.Range(0, saplingPrefabs.Length);
+        saplingInstance = Instantiate(saplingPrefabs[saplingIndex], transform.position, Quaternion.identity);
 
         if (Random.value < birdChance)
         {
@@ -200,6 +197,7 @@ public class FlowerManager : MonoBehaviour
     {
         isBirdEating = false;
         seedPlanted = false;
+        isWatered = false;
 
         if (saplingInstance != null)
         {
@@ -214,7 +212,7 @@ public class FlowerManager : MonoBehaviour
     {
         if (gameManager.gameOver) return;
 
-        if (!isFlower && !IsSpaceOccupied()) 
+        if (!isFlower && !isBirdEating) 
         {
             isFlower = true;
             seedPlanted = true;
@@ -237,12 +235,12 @@ public class FlowerManager : MonoBehaviour
         }
     }
 
-    private bool IsSpaceOccupied()
+    private bool IsPlayerNearby()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, playerController.interactionRadius);
         foreach (Collider collider in colliders)
         {
-            if (collider.CompareTag("Flower") || collider.CompareTag("Sapling") || collider.CompareTag("Soil"))
+            if (collider.CompareTag("Player"))
             {
                 return true;
             }

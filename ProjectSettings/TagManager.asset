@@ -11,6 +11,7 @@ TagManager:
   - Ground
   - Grass
   - Water
+  - Sapling
   layers:
   - Default
   - TransparentFX

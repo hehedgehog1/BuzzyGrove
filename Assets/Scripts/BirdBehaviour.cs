@@ -15,7 +15,7 @@ public class BirdBehaviour : MonoBehaviour
     private float chaseSpeed = 8f;
     private bool isChasingPlayer = false;
     private bool canCatch = false;
-    public float safeWindow = 0.5f;
+    public float safeWindow = 0.1f;
 
     private bool isEating = false;
 

@@ -5210,6 +5210,7 @@ MonoBehaviour:
   waterCarried: 0
   seedCount: 0
   isStunned: 0
+  interactionRadius: 4
   seedPickUpSound: {fileID: 8300000, guid: d672d5d5d0e74f14b846cd5c06e7511c, type: 3}
 --- !u!54 &1505878796
 Rigidbody:
@@ -5257,8 +5258,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.6113396, y: 3.2676046, z: 1}
-  m_Center: {x: -0.0002412796, y: 1.5037848, z: -0}
+  m_Size: {x: 1.6113396, y: 3.1317298, z: 1}
+  m_Center: {x: -0.0002412796, y: 1.5717221, z: 0}
 --- !u!4 &1505878799 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 610afbb40c4385d42aa33adfe3531f0a, type: 3}

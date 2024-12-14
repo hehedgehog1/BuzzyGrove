@@ -20,10 +20,23 @@ public class WaterSourceBehaviour : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (playerController.waterCarried < 5)
+        if (IsPlayerNearby() && playerController.waterCarried < 5)
         {
             //TODO: water audio sfx
             playerController.UpdateWaterCarried(1);
         }
+    }
+
+    private bool IsPlayerNearby()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, playerController.interactionRadius);
+        foreach (Collider collider in colliders)
+        {
+            if (collider.CompareTag("Player"))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

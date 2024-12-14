@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,11 +6,32 @@ using UnityEngine;
 public class GrassBehaviour : MonoBehaviour
 {
     public GameObject soilPrefab;
+    private PlayerController playerController;
+
+    void Start()
+    {
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+    }
 
     void OnMouseDown()
     {
-        //TODO: ideally, should only be able to click on grass when near it
-        Instantiate(soilPrefab, transform.position, Quaternion.identity);
-        Destroy(gameObject);
+        if (IsPlayerNearby())
+        {
+            Instantiate(soilPrefab, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }        
+    }
+
+    private bool IsPlayerNearby()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, playerController.interactionRadius);
+        foreach (Collider collider in colliders)
+        {
+            if (collider.CompareTag("Player"))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

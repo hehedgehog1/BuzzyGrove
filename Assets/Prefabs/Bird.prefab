@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   birdCawSound: {fileID: 8300000, guid: aebeba9611b7e504d95bc1da63ee5564, type: 3}
+  safeWindow: 0.1
 --- !u!82 &-5412098776982779059
 AudioSource:
   m_ObjectHideFlags: 0
