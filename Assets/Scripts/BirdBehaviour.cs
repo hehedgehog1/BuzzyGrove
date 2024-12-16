@@ -7,7 +7,7 @@ public class BirdBehaviour : MonoBehaviour
 
     private float birdEatingTime = 15f;
     private float hostileChance = 0.3f;
-    private FlowerManager flowerManager;
+    private SoilManager soilManager;
     private AudioSource audioSource;
     private Transform player;
     private PlayerController playerController;
@@ -25,9 +25,9 @@ public class BirdBehaviour : MonoBehaviour
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
-    public void Initialize(FlowerManager fm, Transform playerTransform)
+    public void Initialize(SoilManager fm, Transform playerTransform)
     {
-        flowerManager = fm;
+        soilManager = fm;
         isHostile = Random.Range(0f, 1f) < hostileChance;
         player = playerTransform;
         StartCoroutine(BirdWaitThenEat());
@@ -49,7 +49,7 @@ public class BirdBehaviour : MonoBehaviour
         PlaySound(birdCawSound);
 
         isEating = false;
-        flowerManager.isBirdEating = false;
+        soilManager.isBirdEating = false;
 
         if (isHostile)
         {
@@ -92,17 +92,17 @@ public class BirdBehaviour : MonoBehaviour
     private IEnumerator BirdWaitThenEat()
     {
         isEating = true;
-        flowerManager.isBirdEating = true;
+        soilManager.isBirdEating = true;
 
         Debug.Log("A bird has appeared!");
 
         yield return new WaitForSeconds(birdEatingTime);
 
-        if (flowerManager.seedPlanted && isEating)
+        if (soilManager.seedPlanted && isEating)
         {
             Debug.Log("A bird ate a seed!");
 
-            flowerManager.OnBirdAteSeed();
+            soilManager.OnBirdAteSeed();
             Destroy(gameObject);
         }
     }
