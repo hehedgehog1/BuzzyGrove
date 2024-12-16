@@ -17,7 +17,8 @@ public class GrassBehaviour : MonoBehaviour
     {
         if (IsPlayerNearby())
         {
-            Instantiate(soilPrefab, transform.position, Quaternion.identity);
+            Vector3 spawnPos = new Vector3(transform.position.x, -1.3f, transform.position.z);
+            Instantiate(soilPrefab, spawnPos, soilPrefab.transform.rotation);
             Destroy(gameObject);
         }        
     }

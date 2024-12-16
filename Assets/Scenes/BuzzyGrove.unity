@@ -7764,7 +7764,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1263503514079185771, guid: 369841ad7491e464b9680876d3829942, type: 3}
       propertyPath: m_Name
-      value: Soil
+      value: SoilPatch
       objectReference: {fileID: 0}
     - target: {fileID: 1928399826904781265, guid: 369841ad7491e464b9680876d3829942, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7772,7 +7772,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1928399826904781265, guid: 369841ad7491e464b9680876d3829942, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: -1.3
       objectReference: {fileID: 0}
     - target: {fileID: 1928399826904781265, guid: 369841ad7491e464b9680876d3829942, type: 3}
       propertyPath: m_LocalPosition.z
