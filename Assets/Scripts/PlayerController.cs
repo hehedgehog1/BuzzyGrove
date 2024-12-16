@@ -12,8 +12,8 @@ public class PlayerController : MonoBehaviour
     public bool isStunned = false;
     public float interactionRadius = 3.0f;
 
-    private float xRange = 50.0f;
-    private float zRange = 50.0f;
+    private float xRange = 98.0f;
+    private float zRange = 98.0f;
 
     public AudioClip seedPickUpSound;
     private AudioSource playerAudio;

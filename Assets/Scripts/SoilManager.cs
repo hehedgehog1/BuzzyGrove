@@ -201,6 +201,11 @@ public class SoilManager : MonoBehaviour
             Destroy(saplingInstance.gameObject);
         }
 
+        if (seedInstance != null)
+        {
+            Destroy(seedInstance.gameObject);
+        }
+
         SetSoilMaterial(soilPatchMaterial);
     }
 

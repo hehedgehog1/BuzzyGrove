@@ -20,9 +20,11 @@ public class WaterSourceBehaviour : MonoBehaviour
 
     private void OnMouseDown()
     {
+        Debug.Log("Water clicked");
         if (IsPlayerNearby() && playerController.waterCarried < 5)
         {
             //TODO: water audio sfx
+            Debug.Log("Water updated by 1");
             playerController.UpdateWaterCarried(1);
         }
     }
@@ -37,6 +39,7 @@ public class WaterSourceBehaviour : MonoBehaviour
                 return true;
             }
         }
+        Debug.Log("Player too far away to click");
         return false;
     }
 }
