@@ -60,10 +60,16 @@ public class PlayerController : MonoBehaviour
             float moveZ = Input.GetAxis("Vertical") * Time.deltaTime * speed;
 
             Vector3 move = new Vector3(moveX, 0, moveZ);
-            rb.MovePosition(rb.position + move);
+            
+            //rotates character to face walking direction
+            if (move.magnitude > 0.01f)
+            {
+                rb.MovePosition(rb.position + move);
 
-            // Maintain upright rotation
-            transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+                Quaternion targetRotation = Quaternion.LookRotation(-move);
+
+                rb.rotation = Quaternion.Slerp(rb.rotation, targetRotation, 0.1f);
+            }
         }        
     }    
 
