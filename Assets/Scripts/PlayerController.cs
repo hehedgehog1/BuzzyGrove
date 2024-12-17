@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private float xRange = 98.0f;
     private float zRange = 98.0f;
 
+    public Animator anim;
     public AudioClip seedPickUpSound;
     private AudioSource playerAudio;
     private GameManager gameManager;
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
             // Movement logic
             Rigidbody rb = GetComponent<Rigidbody>();
 
+            //Stop player getting too fast
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
             
@@ -56,18 +58,23 @@ public class PlayerController : MonoBehaviour
                 rb.position = new Vector3(rb.position.x, rb.position.y, zRange);
             }
 
-            float moveX = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
-            float moveZ = Input.GetAxis("Vertical") * Time.deltaTime * speed;
+            float moveX = Input.GetAxis("Horizontal");
+            float moveZ = Input.GetAxis("Vertical");
 
             Vector3 move = new Vector3(moveX, 0, moveZ);
-            
-            //rotates character to face walking direction
+            move.Normalize();
+
+            //update animator params
+            anim.SetFloat("horizontal", moveX);
+            anim.SetFloat("vertical", moveZ);
+                        
             if (move.magnitude > 0.01f)
             {
-                rb.MovePosition(rb.position + move);
+                Vector3 movement = move * speed * Time.deltaTime;
+                rb.MovePosition(rb.position + movement);
 
+                //rotates character to face walking direction
                 Quaternion targetRotation = Quaternion.LookRotation(-move);
-
                 rb.rotation = Quaternion.Slerp(rb.rotation, targetRotation, 0.1f);
             }
         }        
