@@ -35,6 +35,9 @@ public class PlayerController : MonoBehaviour
             // Movement logic
             Rigidbody rb = GetComponent<Rigidbody>();
 
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            
             // out of bounds handling
             if (rb.position.x < -xRange)
             {
