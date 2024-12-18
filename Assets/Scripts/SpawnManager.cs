@@ -9,8 +9,8 @@ public class SpawnManager : MonoBehaviour
     private int seedCount = 0;
     private int grassPatchCount = 0;
     private int spawnLimit = 40;
-    private float spawnRangeX = 98;
-    private float spawnRangeZ = 98;
+    private float spawnRangeX = 58;
+    private float spawnRangeZ = 58;
     private float startDelay = 5;
     private float spawnInterval = 5f;
     private float minSpawnDistance = 2.0f;

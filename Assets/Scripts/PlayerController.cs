@@ -10,10 +10,10 @@ public class PlayerController : MonoBehaviour
     public int waterCarried = 0;
     public int seedCount = 0;    
     public bool isStunned = false;
-    public float interactionRadius = 3.0f;
+    public float interactionRadius = 5.0f;
 
-    private float xRange = 98.0f;
-    private float zRange = 98.0f;
+    private float xRange = 58.0f;
+    private float zRange = 58.0f;
 
     public Animator anim;
     public AudioClip seedPickUpSound;
@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
                 rb.position = new Vector3(rb.position.x, rb.position.y, zRange);
             }
 
+            //Updates animator
             float moveX = Input.GetAxis("Horizontal");
             float moveZ = Input.GetAxis("Vertical");
 

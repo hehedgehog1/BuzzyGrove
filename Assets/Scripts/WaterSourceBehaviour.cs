@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class WaterSourceBehaviour : MonoBehaviour
 {
-    private PlayerController playerController;
+    public float interactionRadius;
+    private PlayerController playerController;    
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +32,7 @@ public class WaterSourceBehaviour : MonoBehaviour
 
     private bool IsPlayerNearby()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, playerController.interactionRadius);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRadius);
         foreach (Collider collider in colliders)
         {
             if (collider.CompareTag("Player"))
