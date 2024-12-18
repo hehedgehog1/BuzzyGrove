@@ -15,7 +15,7 @@ public class BirdBehaviour : MonoBehaviour
     private float chaseSpeed = 8f;
     private bool isChasingPlayer = false;
     private bool canCatch = false;
-    public float safeWindow = 0.1f;
+    private float safeWindow = 0.5f; 
 
     private bool isEating = false;
 
@@ -40,7 +40,7 @@ public class BirdBehaviour : MonoBehaviour
         if (isChasingPlayer == true && canCatch == true)
         {
             playerController.CaughtByBird();
-            StartCoroutine(BirdFliesAway());            
+            StartCoroutine(BirdFliesAway());
         }
     }
 
@@ -51,27 +51,27 @@ public class BirdBehaviour : MonoBehaviour
         isEating = false;
         soilManager.isBirdEating = false;
 
+        StopAllCoroutines();
+
         if (isHostile)
         {
-            StopAllCoroutines();
             StartCoroutine(ChasePlayer());
         }
         else
         {
-            StopAllCoroutines();
             StartCoroutine(BirdFliesAway());
-        }             
+        }
     }
 
     private IEnumerator ChasePlayer()
     {
         canCatch = false;
-        
+
         yield return new WaitForSeconds(safeWindow);
 
         isChasingPlayer = true;
         canCatch = true;
-        
+
         float chaseTime = 10f;
         float elapsedTime = 0f;
 
@@ -108,7 +108,7 @@ public class BirdBehaviour : MonoBehaviour
     }
 
     private IEnumerator BirdFliesAway()
-    {        
+    {
         Vector3 startPosition = transform.position;
         Vector3 offScreenPosition = new Vector3(60f, 10f, 10f);
         float duration = 1.0f;

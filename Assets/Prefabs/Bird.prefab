@@ -66,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c1aeb8354c8fda94da87b8a9970f1da5, type: 3}
       propertyPath: m_Name
-      value: Bird 1
+      value: Bird
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -121,7 +121,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   birdCawSound: {fileID: 8300000, guid: aebeba9611b7e504d95bc1da63ee5564, type: 3}
-  safeWindow: 0.1
 --- !u!82 &7969810024720932772
 AudioSource:
   m_ObjectHideFlags: 0
