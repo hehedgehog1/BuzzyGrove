@@ -14,7 +14,6 @@ public class UIManager : MonoBehaviour
 
     private GameManager gameManager;
     private PlayerController playerController;
-    private bool isTyping = false;
 
 
     void Start()

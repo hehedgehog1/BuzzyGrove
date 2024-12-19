@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/StartScreen.unity
     guid: 58105ab36e1048447897a22f52cafa71
   - enabled: 1
-    path: Assets/Scenes/Grove.unity
-    guid: a4a26a1ed30450a41b3e3fcf2b4b0dec
+    path: Assets/Scenes/BuzzyGrove.unity
+    guid: 81443f93d8e9e20419618f0f875171a2
   m_configObjects: {}

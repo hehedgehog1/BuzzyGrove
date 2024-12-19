@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public bool gameOver = false;
     private UIManager uiManager;
     public Button newDayButton;
+    private HighScoreManager highScoreManager;
+    private int currentDay;
 
     public int flowerCount = 0;
     public int honeyCount = 0;
@@ -19,6 +21,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         uiManager = FindObjectOfType<UIManager>();
+        highScoreManager = FindObjectOfType<HighScoreManager>();
 
         dayLength = dayTimer;
         daySegmentLength = dayLength / 3;
@@ -88,6 +91,17 @@ public class GameManager : MonoBehaviour
     {
         gameOver = true;
         Debug.Log("Day has ended! HoneyCount = " + honeyCount);
+        SaveScore();
         newDayButton.gameObject.SetActive(true);
+    }
+
+    public void SaveScore()
+    {
+        currentDay++;
+
+        PlayerPrefs.SetInt("ScoreDay" + currentDay, honeyCount);
+        PlayerPrefs.SetInt("Day", currentDay);
+
+        PlayerPrefs.Save();
     }
 }

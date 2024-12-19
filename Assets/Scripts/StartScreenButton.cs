@@ -6,16 +6,21 @@ public class StartScreenButton : MonoBehaviour
     private Button button;
     private StartScreenManager startScreenManager;
 
+    public enum ButtonAction { StartGame, ShowHighScores }
+    public ButtonAction buttonAction;
+
     void Start()
     {
         button = GetComponent<Button>();
         startScreenManager = GameObject.Find("StartScreenManager").GetComponent<StartScreenManager>();
-        button.onClick.AddListener(StartGame);
-    }
 
-    void StartGame()
-    {
-        Debug.Log(gameObject.name + " was clicked");
-        startScreenManager.StartGame();
+        if (buttonAction == ButtonAction.StartGame)
+        {
+            button.onClick.AddListener(startScreenManager.StartGame);
+        }
+        else if (buttonAction == ButtonAction.ShowHighScores)
+        {
+            button.onClick.AddListener(startScreenManager.ShowHighScores);
+        }
     }
 }
