@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
 
         dayLength = dayTimer;
         daySegmentLength = dayLength / 3;
+
+        uiManager.StartTutorialSpeech();
     }
 
     void Update()
