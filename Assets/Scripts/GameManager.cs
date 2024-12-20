@@ -22,8 +22,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        //PlayerPrefs.DeleteAll();
-
         uiManager = FindObjectOfType<UIManager>();
 
         dayLength = dayTimer;

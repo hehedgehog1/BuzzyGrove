@@ -111,7 +111,7 @@ public class UIManager : MonoBehaviour
                 endOfDayLines.Add("That's the same as our last record!");
             }
 
-            endOfDayLines.Add("So, you want to do this again tomorrow?");
+            endOfDayLines.Add("Let's do this again tomorrow!");
         }        
 
         ShowSpeech(endOfDayLines);
