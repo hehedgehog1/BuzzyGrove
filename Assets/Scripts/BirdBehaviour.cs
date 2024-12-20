@@ -55,6 +55,7 @@ public class BirdBehaviour : MonoBehaviour
 
         if (isHostile)
         {
+            Debug.Log("Bird is hostile");
             StartCoroutine(ChasePlayer());
         }
         else
@@ -65,19 +66,30 @@ public class BirdBehaviour : MonoBehaviour
 
     private IEnumerator ChasePlayer()
     {
+        isChasingPlayer = true;
         canCatch = false;
 
         yield return new WaitForSeconds(safeWindow);
 
-        isChasingPlayer = true;
         canCatch = true;
 
         float chaseTime = 10f;
         float elapsedTime = 0f;
 
+        float minDistanceToPlayer = 0.5f;
+
         while (elapsedTime < chaseTime)
         {
             Vector3 targetPosition = new Vector3(player.position.x, 2.9f, player.position.z);
+
+            Vector3 directionToPlayer = targetPosition - transform.position;
+
+            // If the bird is too close to the player, assume player is caught
+            if (directionToPlayer.magnitude < minDistanceToPlayer)
+            {
+                playerController.CaughtByBird();
+                StartCoroutine(BirdFliesAway());
+            }
 
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, chaseSpeed * Time.deltaTime);
 
@@ -88,6 +100,7 @@ public class BirdBehaviour : MonoBehaviour
         isChasingPlayer = false;
         StartCoroutine(BirdFliesAway());
     }
+
 
     private IEnumerator BirdWaitThenEat()
     {
