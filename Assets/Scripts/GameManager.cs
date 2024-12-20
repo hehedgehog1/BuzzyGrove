@@ -20,10 +20,6 @@ public class GameManager : MonoBehaviour
     public int flowerCount = 0;
     public int honeyCount = 0;
 
-    public Material mornSkybox;
-    public Material noonSkybox;
-    public Material eveSkybox;
-
     void Start()
     {
         uiManager = FindObjectOfType<UIManager>();
@@ -71,25 +67,21 @@ public class GameManager : MonoBehaviour
         {
             timeOfDay = "Morning";
             uiManager.UpdateTimeOfDayText();
-            RenderSettings.skybox = mornSkybox;
         }
         else if (dayTimer > afternoonSegment)
         {
             timeOfDay = "Afternoon";
             uiManager.UpdateTimeOfDayText();
-            RenderSettings.skybox = noonSkybox;
         }
         else if (gameOver)
         {
             timeOfDay = "Goodnight!";
             uiManager.UpdateTimeOfDayText();
-            RenderSettings.skybox = eveSkybox;
         }
         else
         {
             timeOfDay = "Evening!";
             uiManager.UpdateTimeOfDayText();
-            RenderSettings.skybox = eveSkybox;
         }
     }
 
