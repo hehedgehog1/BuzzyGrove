@@ -16,8 +16,8 @@ public class SoilManager : MonoBehaviour
 
     [Header("Timing Settings")]
     private float birdChance = 0.6f;
-    private float stage1_SeededGrowingTime = 10f;
-    private float stage2_SaplingGrowingTime = 10f;
+    private float stage1_SeededGrowingTime = 40f;
+    private float stage2_SaplingGrowingTime = 40f;
     private float birdSpawnTime = 3f;
 
     public bool seedPlanted = false;

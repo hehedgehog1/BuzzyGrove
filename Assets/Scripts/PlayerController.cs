@@ -6,7 +6,9 @@ using UnityEngine.SocialPlatforms;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 9f;
+    public float baseSpeed = 7f;
+    public float speedReductionFactor = 0.3f;
+    public float currentSpeed;
     public int waterCarried = 0;
     public int seedCount = 0;    
     public bool isStunned = false;
@@ -27,6 +29,7 @@ public class PlayerController : MonoBehaviour
         playerAudio = GetComponent<AudioSource>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         uiManager = FindObjectOfType<UIManager>();
+        currentSpeed = baseSpeed;
     }
 
     void Update()
@@ -71,7 +74,7 @@ public class PlayerController : MonoBehaviour
                         
             if (move.magnitude > 0.01f)
             {
-                Vector3 movement = move * speed * Time.deltaTime;
+                Vector3 movement = move * currentSpeed * Time.deltaTime;
                 rb.MovePosition(rb.position + movement);
 
                 //rotates character to face walking direction
@@ -99,10 +102,13 @@ public class PlayerController : MonoBehaviour
 
     internal void UpdateWaterCarried(int amount)
     {
-        waterCarried += amount;        
-        uiManager.UpdateWaterText();
+        // Update water carried
+        waterCarried += amount;
 
-        CalculateSpeed();
+        // Adjust speed based on the amount of water carried
+        currentSpeed = Mathf.Max(baseSpeed - (waterCarried * speedReductionFactor), 0); // Ensure speed doesn't go negative
+    
+        uiManager.UpdateWaterText();
     }
 
     internal void UpdateSeedCount(int seedToAdd)
@@ -122,25 +128,5 @@ public class PlayerController : MonoBehaviour
         //isStunned = false;
         //Debug.Log("not stunned");
         //CalculateSpeed();
-    }
-
-    void CalculateSpeed()
-    {
-        if (!isStunned)
-        {
-            //change speed 7-9 depending on how much water carried
-            if (waterCarried <= 1)
-            {
-                speed = 9f;
-            }
-            else if (waterCarried > 1 && waterCarried < 5)
-            {
-                speed = 8f;
-            }
-            else
-            {
-                speed = 7f;
-            }
-        }        
     }
 }
