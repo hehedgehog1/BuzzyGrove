@@ -78,7 +78,14 @@ public class PlayerController : MonoBehaviour
                 Quaternion targetRotation = Quaternion.LookRotation(-move);
                 rb.rotation = Quaternion.Slerp(rb.rotation, targetRotation, 0.1f);
             }
-        }        
+        }
+        else
+        {
+            //when game over, player should stop walking
+            anim.SetFloat("horizontal", 0);
+            anim.SetFloat("vertical", 0);
+            Debug.Log("Game over - animation reset");
+        }
     }    
 
     void OnTriggerEnter(Collider collision)
