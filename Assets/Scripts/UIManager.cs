@@ -11,7 +11,6 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI honeyText;
     public TextMeshProUGUI waterText;
     public TextMeshProUGUI speechText;
-    public TextMeshProUGUI highScoreText;
     public GameObject topBar;    
     public float typingSpeed = 0.05f;
 
@@ -118,7 +117,7 @@ public class UIManager : MonoBehaviour
     }
 
     internal void ShowSpeech(List<string> lines)
-    {
+    {        
         if (!topBar.activeSelf)
         {
             topBar.SetActive(true);
@@ -127,9 +126,9 @@ public class UIManager : MonoBehaviour
     }
 
     IEnumerator DisplaySpeech(List<string> lines)
-    {
+    {     
         foreach (string line in lines)
-        {
+        {            
             yield return StartCoroutine(TypeText(line));
             yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Mouse0));
         }

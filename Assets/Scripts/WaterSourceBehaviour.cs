@@ -5,12 +5,15 @@ using UnityEngine;
 public class WaterSourceBehaviour : MonoBehaviour
 {
     public float interactionRadius;
-    private PlayerController playerController;    
+    private PlayerController playerController;
+    public AudioClip waterSound;
+    private AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -24,7 +27,7 @@ public class WaterSourceBehaviour : MonoBehaviour
         Debug.Log("Water clicked");
         if (IsPlayerNearby() && playerController.waterCarried < 5)
         {
-            //TODO: water audio sfx
+            PlaySound(waterSound);
             Debug.Log("Water updated by 1");
             playerController.UpdateWaterCarried(1);
         }
@@ -42,5 +45,13 @@ public class WaterSourceBehaviour : MonoBehaviour
         }
         Debug.Log("Player too far away to click");
         return false;
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (audioSource != null && clip != null && !audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(clip, 1.0f);
+        }
     }
 }
