@@ -6,13 +6,13 @@ using UnityEngine.SocialPlatforms;
 
 public class PlayerController : MonoBehaviour
 {
-    public float baseSpeed = 7f;
-    public float speedReductionFactor = 0.3f;
-    public float currentSpeed;
+    private float speed = 7f;
     public int waterCarried = 0;
     public int seedCount = 0;    
     public bool isStunned = false;
     public float interactionRadius = 5.0f;
+    private float stunLength = 10.0f;
+    private float stunSpeed = 2.0f;
 
     private float xRange = 58.0f;
     private float zRange = 58.0f;
@@ -29,7 +29,6 @@ public class PlayerController : MonoBehaviour
         playerAudio = GetComponent<AudioSource>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         uiManager = FindObjectOfType<UIManager>();
-        currentSpeed = baseSpeed;
     }
 
     void Update()
@@ -74,7 +73,7 @@ public class PlayerController : MonoBehaviour
                         
             if (move.magnitude > 0.01f)
             {
-                Vector3 movement = move * currentSpeed * Time.deltaTime;
+                Vector3 movement = move * speed * Time.deltaTime;
                 rb.MovePosition(rb.position + movement);
 
                 //rotates character to face walking direction
@@ -103,11 +102,7 @@ public class PlayerController : MonoBehaviour
     internal void UpdateWaterCarried(int amount)
     {
         // Update water carried
-        waterCarried += amount;
-
-        // Adjust speed based on the amount of water carried
-        currentSpeed = Mathf.Max(baseSpeed - (waterCarried * speedReductionFactor), 0); // Ensure speed doesn't go negative
-    
+        waterCarried += amount;    
         uiManager.UpdateWaterText();
     }
 
@@ -121,12 +116,19 @@ public class PlayerController : MonoBehaviour
     {
         isStunned = true;
         Debug.Log("is stunned");
-        // speed = 3f;
-
-        //yield return new WaitForSeconds(3f);
-
-        //isStunned = false;
-        //Debug.Log("not stunned");
-        //CalculateSpeed();
+        StartCoroutine(TemporarySpeedChange(stunSpeed, stunLength));
     }
+
+    private IEnumerator TemporarySpeedChange(float newSpeed, float duration)
+    {
+        float originalSpeed = speed;
+        speed = newSpeed;
+
+        yield return new WaitForSeconds(duration);
+
+        speed = originalSpeed;
+        isStunned = false;
+    }
+
+
 }

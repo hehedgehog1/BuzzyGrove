@@ -654,7 +654,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3db9c8130de1e6142b1f0b720ce6ba36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
   waterCarried: 0
   seedCount: 0
   isStunned: 0
