@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,24 +11,35 @@ public class GameManager : MonoBehaviour
     private float daySegmentLength;
     public string timeOfDay = "";
     public bool gameOver = false;
-    private UIManager uiManager;
+    private UIManager uiManager;    
     public Button newDayButton;
-    private HighScoreManager highScoreManager;
-    private int currentDay;
+    public Button leaveButton;
+    private int highScore;
+    public bool isFirstDay = true;
 
     public int flowerCount = 0;
     public int honeyCount = 0;
 
     void Start()
     {
+        //PlayerPrefs.DeleteAll();
+
         uiManager = FindObjectOfType<UIManager>();
-        highScoreManager = FindObjectOfType<HighScoreManager>();
 
         dayLength = dayTimer;
         daySegmentLength = dayLength / 3;
 
-        uiManager.StartTutorialSpeech();
-    }
+        IsFirstDay();
+
+        if (isFirstDay)
+        {
+            uiManager.StartTutorialSpeech();
+        }
+        else
+        {
+            uiManager.ReturnSpeech();
+        }
+    }       
 
     void Update()
     {
@@ -91,17 +103,50 @@ public class GameManager : MonoBehaviour
     {
         gameOver = true;
         Debug.Log("Day has ended! HoneyCount = " + honeyCount);
-        SaveScore();
+
+        uiManager.EndOfDaySpeech(honeyCount, GetHighScore(), isFirstDay);
+
+        SetHighScore();
+        leaveButton.gameObject.SetActive(true);
         newDayButton.gameObject.SetActive(true);
     }
 
-    public void SaveScore()
-    {
-        currentDay++;
+    void IsFirstDay()
+    {        
+        int currentHighScore = GetHighScore();
+        Debug.Log("The current high score is " + currentHighScore);
 
-        PlayerPrefs.SetInt("ScoreDay" + currentDay, honeyCount);
-        PlayerPrefs.SetInt("Day", currentDay);
-
-        PlayerPrefs.Save();
+        if (currentHighScore == 0)
+        {
+            isFirstDay = true;
+        }
+        else
+        {
+            isFirstDay= false;
+        }
+        Debug.Log("isFirstDay = " + isFirstDay);
     }
+
+    private void SetHighScore()
+    {
+        int currentHighScore = PlayerPrefs.GetInt("HighScore", 0);
+
+        if (honeyCount > currentHighScore)
+        {
+            // Update the high score
+            PlayerPrefs.SetInt("HighScore", honeyCount);
+            PlayerPrefs.Save();
+            Debug.Log("New high score set: " + honeyCount);
+        }
+        else
+        {
+            Debug.Log("Score " + honeyCount + " did not exceed the high score: " + currentHighScore);
+        }
+    }
+
+    public int GetHighScore()
+    {
+        return PlayerPrefs.GetInt("HighScore", 0);
+    }
+
 }

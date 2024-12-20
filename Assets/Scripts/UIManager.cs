@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -9,6 +11,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI honeyText;
     public TextMeshProUGUI waterText;
     public TextMeshProUGUI speechText;
+    public TextMeshProUGUI highScoreText;
     public GameObject topBar;    
     public float typingSpeed = 0.05f;
 
@@ -44,7 +47,8 @@ public class UIManager : MonoBehaviour
 
     internal void StartTutorialSpeech()
     {
-        string[] tutorialLines = {
+        List<string> speechLines = new List<string>
+        {
             "Bzz Buzz",
             "Hey you! I need your help buddy.",
             "There's no flowers around here.",
@@ -62,10 +66,58 @@ public class UIManager : MonoBehaviour
             "Let's see how much we can make in a day!"
         };
 
-        ShowSpeech(tutorialLines);
+        ShowSpeech(speechLines);
     }
 
-    internal void ShowSpeech(string[] lines)
+    internal void EndOfDaySpeech(int honeyCount, int highScore, bool isFirstDay)
+    {
+        List<string> endOfDayLines = new List<string>
+        {
+            "Bzz Bzz",
+            "Hey, the day is over!",            
+        };
+
+        if (honeyCount == 0)
+        {
+            endOfDayLines.Add($"We made no honey!!!!!");
+            endOfDayLines.Add("How terrible!!!!");
+            endOfDayLines.Add("You should try harder tomorrow...");
+        }
+        else
+        {
+            if (honeyCount == 1)
+            {
+                endOfDayLines.Add($"We made {honeyCount} jar of honey together!");
+            }
+            else
+            {
+                endOfDayLines.Add($"We made {honeyCount} jars of honey together!");
+            }
+
+            if (isFirstDay)
+            {
+                endOfDayLines.Add("<size=70%><i>Oh boy, I'm gonna be one rich bee!</i></size>");
+            }
+            else if (honeyCount > highScore)
+            {
+                endOfDayLines.Add("That's our best day yet!");
+            }
+            else if (honeyCount < highScore)
+            {
+                endOfDayLines.Add($"<i>But it doesn't beat that day we made {highScore} jars...</i>");
+            }
+            else
+            {
+                endOfDayLines.Add("That's the same as our last record!");
+            }
+
+            endOfDayLines.Add("So, you want to do this again tomorrow?");
+        }        
+
+        ShowSpeech(endOfDayLines);
+    }
+
+    internal void ShowSpeech(List<string> lines)
     {
         if (!topBar.activeSelf)
         {
@@ -74,7 +126,7 @@ public class UIManager : MonoBehaviour
         StartCoroutine(DisplaySpeech(lines));
     }
 
-    IEnumerator DisplaySpeech(string[] lines)
+    IEnumerator DisplaySpeech(List<string> lines)
     {
         foreach (string line in lines)
         {
@@ -101,4 +153,15 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    internal void ReturnSpeech()
+    {
+        List<string> speechLines = new List<string>
+        {
+            "Bzz Buzz",
+            "Good morning!",
+            "Let's make more honey today!"
+        };
+
+        ShowSpeech(speechLines);
+    }
 }

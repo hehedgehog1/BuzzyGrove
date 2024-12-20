@@ -6,7 +6,7 @@ public class StartScreenButton : MonoBehaviour
     private Button button;
     private StartScreenManager startScreenManager;
 
-    public enum ButtonAction { StartGame, ShowHighScores }
+    public enum ButtonAction { StartGame }
     public ButtonAction buttonAction;
 
     void Start()
@@ -17,10 +17,6 @@ public class StartScreenButton : MonoBehaviour
         if (buttonAction == ButtonAction.StartGame)
         {
             button.onClick.AddListener(startScreenManager.StartGame);
-        }
-        else if (buttonAction == ButtonAction.ShowHighScores)
-        {
-            button.onClick.AddListener(startScreenManager.ShowHighScores);
         }
     }
 }

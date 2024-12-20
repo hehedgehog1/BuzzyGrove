@@ -4,20 +4,15 @@ using UnityEngine.SceneManagement;
 
 public class StartScreenManager : MonoBehaviour
 {
-    public GameObject highScorePanel;
+    private UIManager uiManager;
+
+    void Start()
+    {
+        uiManager = FindObjectOfType<UIManager>();
+    }
 
     public void StartGame()
     {        
         SceneManager.LoadScene("BuzzyGrove");
-    }
-
-    public void ShowHighScores()
-    {
-        highScorePanel.SetActive(true);
-    }
-
-    public void HideHighScores()
-    {
-        highScorePanel.SetActive(false);
-    }     
+    }    
 }
