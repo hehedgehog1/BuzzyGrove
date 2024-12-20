@@ -7,6 +7,7 @@ public class BirdBehaviour : MonoBehaviour
 
     private float birdEatingTime = 15f;
     private float hostileChance = 0.3f;
+    private float chaseTime = 8f;
     private SoilManager soilManager;
     private AudioSource audioSource;
     private Transform player;
@@ -72,8 +73,7 @@ public class BirdBehaviour : MonoBehaviour
         yield return new WaitForSeconds(safeWindow);
 
         canCatch = true;
-
-        float chaseTime = 10f;
+                
         float elapsedTime = 0f;
 
         float minDistanceToPlayer = 0.5f;

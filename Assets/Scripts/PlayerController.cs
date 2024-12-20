@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     public int seedCount = 0;    
     public bool isStunned = false;
     public float interactionRadius = 5.0f;
-    private float stunLength = 10.0f;
+    private float stunLength = 8.0f;
     private float stunSpeed = 2.0f;
 
     private float xRange = 58.0f;
