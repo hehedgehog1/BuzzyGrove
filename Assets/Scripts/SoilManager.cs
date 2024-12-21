@@ -59,6 +59,7 @@ public class SoilManager : MonoBehaviour
         }
     }
 
+    // Handle seed planting
     void OnMouseDown()
     {
         if (IsPlayerNearby() && !seedPlanted && playerController.seedCount > 0)
@@ -67,6 +68,7 @@ public class SoilManager : MonoBehaviour
         }
     }
 
+    // Handle soil watering
     void OnMouseOver()
     {
         // Check if the right mouse button is clicked
@@ -84,7 +86,6 @@ public class SoilManager : MonoBehaviour
         PlaySound(plantSound);
 
         AddSeedModel();
-
         seedPlanted = true;
         StartCoroutine(Stage1_SeededState());
     }
@@ -141,6 +142,47 @@ public class SoilManager : MonoBehaviour
         }
     }
 
+    private void Stage3_FloweredState()
+    {
+        if (gameManager.gameOver) return;
+
+        if (!isFlower && !isBirdEating)
+        {
+            isFlower = true;
+            seedPlanted = true;
+
+            if (saplingInstance != null)
+            {
+                Destroy(saplingInstance.gameObject);
+            }
+
+            if (seedInstance != null)
+            {
+                Destroy(seedInstance.gameObject);
+            }
+
+            StopAllCoroutines();
+
+            gameManager.UpdateFlowerCount(1);
+            Debug.Log("A flower has grown! Flower count: " + gameManager.flowerCount);
+
+            int flowerIndex = Random.Range(0, flowerPrefabs.Length);
+            GameObject selectedPrefab = flowerPrefabs[flowerIndex];
+
+            Vector3 spawnPosition = new Vector3(transform.position.x, -0.35f, transform.position.z);
+
+            // For 'Big' version of flowers, y position changes
+            if (selectedPrefab.name.Contains("Big"))
+            {
+                spawnPosition.y = -0.6f;
+            }
+
+            Instantiate(selectedPrefab, spawnPosition, selectedPrefab.transform.rotation);
+
+            gameObject.SetActive(false);
+        }
+    }
+
     private IEnumerator WaterPlant()
     {
         if (!seedPlanted)
@@ -189,7 +231,7 @@ public class SoilManager : MonoBehaviour
         }
     }
 
-    public void OnBirdAteSeed()
+    internal void OnBirdAteSeed()
     {
         isBirdEating = false;
         seedPlanted = false;
@@ -207,48 +249,7 @@ public class SoilManager : MonoBehaviour
         }
 
         SetSoilMaterial(soilPatchMaterial);
-    }
-
-    private void Stage3_FloweredState()
-    {
-        if (gameManager.gameOver) return;
-
-        if (!isFlower && !isBirdEating) 
-        {
-            isFlower = true;
-            seedPlanted = true;
-
-            if (saplingInstance != null)
-            {
-                Destroy(saplingInstance.gameObject);
-            }
-
-            if (seedInstance != null)
-            {
-                Destroy(seedInstance.gameObject);
-            }
-
-            StopAllCoroutines();            
-
-            gameManager.UpdateFlowerCount(1);
-            Debug.Log("A flower has grown! Flower count: " + gameManager.flowerCount);
-
-            int flowerIndex = Random.Range(0, flowerPrefabs.Length);
-            GameObject selectedPrefab = flowerPrefabs[flowerIndex];
-
-            Vector3 spawnPosition = new Vector3(transform.position.x, -0.35f, transform.position.z);
-
-            // For 'Big' version of flowers, y position changes
-            if (selectedPrefab.name.Contains("Big"))
-            {
-                spawnPosition.y = -0.6f;
-            }
-
-            Instantiate(selectedPrefab, spawnPosition, selectedPrefab.transform.rotation);
-
-            gameObject.SetActive(false);
-        }
-    }
+    }       
 
     private bool IsPlayerNearby()
     {

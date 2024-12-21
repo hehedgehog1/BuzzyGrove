@@ -6,19 +6,22 @@ using UnityEngine.SocialPlatforms;
 
 public class PlayerController : MonoBehaviour
 {
-    private float speed = 7f;
+    [SerializeField] private AudioClip seedPickUpSound;
+
     public int waterCarried = 0;
-    public int seedCount = 0;    
+    public int seedCount = 0;
     public bool isStunned = false;
     public float interactionRadius = 5.0f;
+
+    private float speed = 7f;    
     private float stunLength = 8.0f;
     private float stunSpeed = 2.0f;
-
     private float xRange = 58.0f;
     private float zRange = 58.0f;
 
     public Animator anim;
-    public AudioClip seedPickUpSound;
+
+    private Rigidbody rb;
     private AudioSource playerAudio;
     private GameManager gameManager;
     private UIManager uiManager;
@@ -26,6 +29,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         playerAudio = GetComponent<AudioSource>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         uiManager = FindObjectOfType<UIManager>();
@@ -36,7 +40,6 @@ public class PlayerController : MonoBehaviour
         if (!gameManager.gameOver)
         {
             // Movement logic
-            Rigidbody rb = GetComponent<Rigidbody>();
 
             //Stop player getting too fast
             rb.velocity = Vector3.zero;
@@ -115,7 +118,7 @@ public class PlayerController : MonoBehaviour
     internal void CaughtByBird()
     {
         isStunned = true;
-        Debug.Log("is stunned");
+        Debug.Log("Player is stunned");
         StartCoroutine(TemporarySpeedChange(stunSpeed, stunLength));
     }
 

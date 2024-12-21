@@ -16,12 +16,6 @@ public class WaterSourceBehaviour : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnMouseDown()
     {
         Debug.Log("Water clicked");

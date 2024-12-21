@@ -6,29 +6,29 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public float dayTimer = 300f; //5 mins
-    private float dayLength;
-    private float daySegmentLength;
+    private const int DaySegments = 3;
+
+    public float dayTimer = 300f; // 5 minutes
     public string timeOfDay = "";
     public bool gameOver = false;
-    private UIManager uiManager;    
     public Button newDayButton;
     public Button leaveButton;
-    private int highScore;
-    public bool isFirstDay = true;
-
     public int flowerCount = 0;
     public int honeyCount = 0;
+    public bool isFirstDay = true;
+
+    private float dayLength;
+    private float daySegmentLength;
+    private UIManager uiManager;
+    private int highScore;
 
     void Start()
     {
         uiManager = FindObjectOfType<UIManager>();
-
         dayLength = dayTimer;
-        daySegmentLength = dayLength / 3;
+        daySegmentLength = dayLength / DaySegments;
 
-        IsFirstDay();
-
+        CheckIfIsFirstDay();
         if (isFirstDay)
         {
             uiManager.StartTutorialSpeech();
@@ -66,23 +66,21 @@ public class GameManager : MonoBehaviour
         if (dayTimer > morningSegment)
         {
             timeOfDay = "Morning";
-            uiManager.UpdateTimeOfDayText();
         }
         else if (dayTimer > afternoonSegment)
         {
-            timeOfDay = "Afternoon";
-            uiManager.UpdateTimeOfDayText();
+            timeOfDay = "Afternoon";            
         }
         else if (gameOver)
         {
             timeOfDay = "Goodnight!";
-            uiManager.UpdateTimeOfDayText();
         }
         else
         {
             timeOfDay = "Evening!";
-            uiManager.UpdateTimeOfDayText();
         }
+
+        uiManager.UpdateTimeOfDayText();
     }
 
     internal void UpdateHoneyCount(int honeyToAdd)
@@ -105,11 +103,12 @@ public class GameManager : MonoBehaviour
         uiManager.EndOfDaySpeech(honeyCount, GetHighScore(), isFirstDay);
 
         SetHighScore();
+
         leaveButton.gameObject.SetActive(true);
         newDayButton.gameObject.SetActive(true);
     }
 
-    void IsFirstDay()
+    void CheckIfIsFirstDay()
     {        
         int currentHighScore = GetHighScore();
         Debug.Log("The current high score is " + currentHighScore);
@@ -127,7 +126,7 @@ public class GameManager : MonoBehaviour
 
     private void SetHighScore()
     {
-        int currentHighScore = PlayerPrefs.GetInt("HighScore", 0);
+        int currentHighScore = GetHighScore();
 
         if (honeyCount > currentHighScore)
         {

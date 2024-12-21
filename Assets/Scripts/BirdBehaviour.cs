@@ -5,19 +5,21 @@ public class BirdBehaviour : MonoBehaviour
 {
     public AudioClip birdCawSound;
 
-    private float birdEatingTime = 15f;
-    private float hostileChance = 0.3f;
-    private float chaseTime = 8f;
+    private const float BirdEatingTime = 15f;
+    private const float HostileChance = 0.3f;
+    private const float ChaseTime = 8f;
+    private const float ChaseSpeed = 6f;
+    private const float MinDistanceToPlayer = 0.5f;
+    private const float SafeWindow = 0.2f;
+
     private SoilManager soilManager;
     private AudioSource audioSource;
     private Transform player;
     private PlayerController playerController;
+
     private bool isHostile;
-    private float chaseSpeed = 6f;
     private bool isChasingPlayer = false;
     private bool canCatch = false;
-    private float safeWindow = 0.2f; 
-
     private bool isEating = false;
 
     void Start()
@@ -26,19 +28,17 @@ public class BirdBehaviour : MonoBehaviour
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
-    public void Initialize(SoilManager fm, Transform playerTransform)
+    public void Initialize(SoilManager soilManager, Transform playerTransform)
     {
-        soilManager = fm;
-        isHostile = Random.Range(0f, 1f) < hostileChance;
+        this.soilManager = soilManager;
+        isHostile = Random.Range(0f, 1f) < HostileChance;
         player = playerTransform;
         StartCoroutine(BirdWaitThenEat());
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player")) return;
-
-        if (isChasingPlayer == true && canCatch == true)
+        if (other.CompareTag("Player") && isChasingPlayer && canCatch)
         {
             playerController.CaughtByBird();
             StartCoroutine(BirdFliesAway());
@@ -48,10 +48,8 @@ public class BirdBehaviour : MonoBehaviour
     public void ScareAway()
     {
         PlaySound(birdCawSound);
-
         isEating = false;
         soilManager.isBirdEating = false;
-
         StopAllCoroutines();
 
         if (isHostile)
@@ -70,28 +68,25 @@ public class BirdBehaviour : MonoBehaviour
         isChasingPlayer = true;
         canCatch = false;
 
-        yield return new WaitForSeconds(safeWindow);
+        yield return new WaitForSeconds(SafeWindow); //so bird doesn't instantly catch player
 
-        canCatch = true;
-                
+        canCatch = true;                
         float elapsedTime = 0f;
 
-        float minDistanceToPlayer = 0.5f;
-
-        while (elapsedTime < chaseTime)
+        while (elapsedTime < ChaseTime)
         {
             Vector3 targetPosition = new Vector3(player.position.x, 2.9f, player.position.z);
-
             Vector3 directionToPlayer = targetPosition - transform.position;
 
             // If the bird is too close to the player, assume player is caught
-            if (directionToPlayer.magnitude < minDistanceToPlayer)
+            if (directionToPlayer.magnitude < MinDistanceToPlayer)
             {
                 playerController.CaughtByBird();
                 StartCoroutine(BirdFliesAway());
+                yield break;
             }
 
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, chaseSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, ChaseSpeed * Time.deltaTime);
 
             elapsedTime += Time.deltaTime;
             yield return null;
@@ -109,12 +104,11 @@ public class BirdBehaviour : MonoBehaviour
 
         Debug.Log("A bird has appeared!");
 
-        yield return new WaitForSeconds(birdEatingTime);
+        yield return new WaitForSeconds(BirdEatingTime);
 
         if (soilManager.seedPlanted && isEating)
         {
             Debug.Log("A bird ate a seed!");
-
             soilManager.OnBirdAteSeed();
             Destroy(gameObject);
         }
