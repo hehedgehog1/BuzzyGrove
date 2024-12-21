@@ -8,7 +8,6 @@ public class StartScreenManager : MonoBehaviour
 
     void Start()
     {
-        PlayerPrefs.DeleteAll(); //When return to main menu, the high scores are reset. 
         uiManager = FindObjectOfType<UIManager>();
     }
 
