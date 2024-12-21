@@ -95,7 +95,7 @@ public class UIManager : MonoBehaviour
 
             if (isFirstDay)
             {
-                endOfDayLines.Add("<size=70%><i>Oh boy, I'm gonna be one rich bee!</i></size>");
+                endOfDayLines.Add("<i>Oh boy, I'm gonna be one rich bee!</i>");
             }
             else if (honeyCount > highScore)
             {
