@@ -144,12 +144,11 @@ public class SoilManager : MonoBehaviour
 
     private void Stage3_FloweredState()
     {
-        if (gameManager.gameOver) return;
+        if (gameManager.gameOver || !seedPlanted) return;
 
         if (!isFlower && !isBirdEating)
         {
-            isFlower = true;
-            seedPlanted = true;
+            isFlower = true;            
 
             if (saplingInstance != null)
             {
@@ -159,10 +158,10 @@ public class SoilManager : MonoBehaviour
             if (seedInstance != null)
             {
                 Destroy(seedInstance.gameObject);
+                seedPlanted = false;
             }
 
             StopAllCoroutines();
-
             gameManager.UpdateFlowerCount(1);
             Debug.Log("A flower has grown! Flower count: " + gameManager.flowerCount);
 
@@ -235,7 +234,9 @@ public class SoilManager : MonoBehaviour
     {
         isBirdEating = false;
         seedPlanted = false;
+        isSapling = false;
         isWatered = false;
+        isFlower = false;
 
         if (saplingInstance != null)
         {

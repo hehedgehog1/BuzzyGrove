@@ -117,9 +117,15 @@ public class PlayerController : MonoBehaviour
 
     internal void CaughtByBird()
     {
-        isStunned = true;
-        Debug.Log("Player is stunned");
-        StartCoroutine(TemporarySpeedChange(stunSpeed, stunLength));
+        if (!isStunned)
+        {
+            isStunned = true;
+            StartCoroutine(TemporarySpeedChange(stunSpeed, stunLength));
+        }
+        else
+        {
+            Debug.Log("Player is already stunned; refreshing stun duration.");
+        }
     }
 
     private IEnumerator TemporarySpeedChange(float newSpeed, float duration)
@@ -129,9 +135,12 @@ public class PlayerController : MonoBehaviour
 
         yield return new WaitForSeconds(duration);
 
-        speed = originalSpeed;
-        isStunned = false;
+        // Check if another stun effect is active before resetting
+        if (speed == newSpeed)
+        {
+            speed = originalSpeed;
+            isStunned = false;
+            Debug.Log("Player is no longer stunned.");
+        }
     }
-
-
 }
