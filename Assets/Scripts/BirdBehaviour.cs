@@ -86,6 +86,23 @@ public class BirdBehaviour : MonoBehaviour
                 yield break;
             }
 
+            // Rotate bird to face the direction it's moving
+            if (directionToPlayer != Vector3.zero)
+            {
+                Vector3 flatDirection = new Vector3(directionToPlayer.x, 0f, directionToPlayer.z);
+                Quaternion targetRotation = Quaternion.LookRotation(flatDirection);
+
+                // Apply a 90-degree rotation offset if the model faces +X instead of +Z
+                Quaternion rotationOffset = Quaternion.Euler(-90f, -90f, 0f); // adjust angle as needed
+                Quaternion finalRotation = targetRotation * rotationOffset;
+
+                transform.rotation = Quaternion.Slerp(transform.rotation, finalRotation, 10f * Time.deltaTime);
+            }
+
+
+
+
+
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, ChaseSpeed * Time.deltaTime);
 
             elapsedTime += Time.deltaTime;
