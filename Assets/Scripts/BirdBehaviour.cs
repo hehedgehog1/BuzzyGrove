@@ -8,7 +8,7 @@ public class BirdBehaviour : MonoBehaviour
     private const float BirdEatingTime = 15f;
     private const float HostileChance = 0.3f;
     private const float ChaseTime = 8f;
-    private const float ChaseSpeed = 6f;
+    private const float ChaseSpeed = 5f; //original = 6
     private const float MinDistanceToPlayer = 0.5f;
     private const float SafeWindow = 0.2f;
 
@@ -98,9 +98,6 @@ public class BirdBehaviour : MonoBehaviour
 
                 transform.rotation = Quaternion.Slerp(transform.rotation, finalRotation, 10f * Time.deltaTime);
             }
-
-
-
 
 
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, ChaseSpeed * Time.deltaTime);
