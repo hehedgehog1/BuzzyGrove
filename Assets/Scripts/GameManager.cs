@@ -16,9 +16,9 @@ public class GameManager : MonoBehaviour
     public int flowerCount = 0;
     public int honeyCount = 0;
     public bool isFirstDay = true;
+    public float dayLength;
+    public float daySegmentLength;
 
-    private float dayLength;
-    private float daySegmentLength;
     private UIManager uiManager;
     private int highScore;
 
