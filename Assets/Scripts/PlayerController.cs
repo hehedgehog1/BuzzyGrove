@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     public int waterCarried = 0;
     public int seedCount = 0;
     public bool isStunned = false;
-    
+
     [Tooltip("Range at which player can interact with objects")]
     [SerializeField] public float interactionRadius = 5.0f;
 
@@ -59,6 +59,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+/// <summary>
+/// Handles physics-based player movement with smooth acceleration and deceleration.
+/// Uses velocity instead of MovePosition for more natural feel.
+/// </summary>
 void FixedUpdate()
 {
     if (!gameManager.gameOver)
