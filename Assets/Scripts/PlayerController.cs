@@ -8,13 +8,13 @@ public class PlayerController : MonoBehaviour
     public int waterCarried = 0;
     public int seedCount = 0;
     public bool isStunned = false;
-    public float interactionRadius = 5.0f;
-
-    private float speed = 7f;    
-    private float stunLength = 8.0f;
-    private float stunSpeed = 2.0f;
-    private float xRange = 58.0f;
-    private float zRange = 58.0f;
+    
+    [SerializeField] private float speed = 7f;    
+    [SerializeField] private float stunLength = 8.0f;
+    [SerializeField] private float stunSpeed = 2.0f;
+    [SerializeField] private float xRange = 58.0f;
+    [SerializeField] private float zRange = 58.0f;
+    [SerializeField] private float interactionRadius = 5.0f;
 
     public Animator anim;
 
