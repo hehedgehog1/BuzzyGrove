@@ -59,30 +59,41 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+void FixedUpdate()
+{
+    if (!gameManager.gameOver)
     {
-        if (!gameManager.gameOver)
+        // Clamp position within bounds
+        float clampedX = Mathf.Clamp(rb.position.x, -xRange, xRange);
+        float clampedZ = Mathf.Clamp(rb.position.z, -zRange, zRange);
+        rb.position = new Vector3(clampedX, rb.position.y, clampedZ);
+
+        // Only move if input exists
+        if (moveInput.magnitude > 0.01f)
         {
-            // Stop residual motion if needed
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
+            // Use velocity instead of MovePosition for smoother, physics-based movement
+            Vector3 targetVelocity = moveInput * speed;
+            rb.velocity = Vector3.Lerp(rb.velocity, targetVelocity, 0.1f);
 
-            // Clamp position within bounds
-            float clampedX = Mathf.Clamp(rb.position.x, -xRange, xRange);
-            float clampedZ = Mathf.Clamp(rb.position.z, -zRange, zRange);
-            rb.position = new Vector3(clampedX, rb.position.y, clampedZ);
-
-            // Only move if input exists
-            if (moveInput.magnitude > 0.01f)
-            {
-                Vector3 movement = moveInput * speed * Time.fixedDeltaTime;
-                rb.MovePosition(rb.position + movement);
-
-                Quaternion targetRotation = Quaternion.LookRotation(-moveInput);
-                rb.rotation = Quaternion.Slerp(rb.rotation, targetRotation, 0.1f);
-            }
+            // Rotate to face movement direction
+            Quaternion targetRotation = Quaternion.LookRotation(-moveInput);
+            rb.rotation = Quaternion.Slerp(rb.rotation, targetRotation, 0.15f);
         }
+        else
+        {
+            // Decelerate smoothly when no input
+            rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, 0.2f);
+        }
+        
+        // Keep the bee grounded (prevent vertical drift)
+        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
     }
+    else
+    {
+        // Stop all movement when game is over
+        rb.velocity = Vector3.zero;
+    }
+}
 
     void OnTriggerEnter(Collider collision)
     {
