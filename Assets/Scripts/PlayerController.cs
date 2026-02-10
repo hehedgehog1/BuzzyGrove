@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     public int waterCarried = 0;
     public int seedCount = 0;
     public bool isStunned = false;
+    
+    [Tooltip("Range at which player can interact with objects")]
     [SerializeField] public float interactionRadius = 5.0f;
 
     [SerializeField] private float speed = 7f;    
