@@ -82,7 +82,7 @@ void FixedUpdate()
         else
         {
             // Decelerate smoothly when no input
-            rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, 0.2f);
+            rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, 0.4f);
         }
         
         // Keep the bee grounded (prevent vertical drift)
