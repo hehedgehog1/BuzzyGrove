@@ -13,7 +13,9 @@ public class CameraFollow : MonoBehaviour
         offset = transform.position - player.position;
     }
 
-    void Update()
+    // LateUpdate runs after everything else, including player movement
+    // This means the camera always follows the player's final position each frame
+    void LateUpdate()
     {
         transform.position = player.position + offset;
     }
