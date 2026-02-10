@@ -57,8 +57,11 @@ public class GameManager : MonoBehaviour
 
     private void UpdateDayLeft()
     {
-        var morningSegment = dayLength - daySegmentLength;
-        var afternoonSegment = morningSegment - daySegmentLength;
+        // Timer counts DOWN from dayLength to 0, so higher values = earlier in the day
+        // Example with 300s day: 300s-200s = Morning, 200s-100s = Afternoon, 100s-0s = Evening
+        
+        var morningSegment = dayLength - daySegmentLength;  // 200s threshold
+        var afternoonSegment = morningSegment - daySegmentLength;   // 100s threshold
 
         if (dayTimer > morningSegment)
         {
