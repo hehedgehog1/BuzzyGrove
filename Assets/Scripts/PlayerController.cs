@@ -16,8 +16,8 @@ public class PlayerController : MonoBehaviour
     private float speed = 7f;    
     private float stunLength = 8.0f;
     private float stunSpeed = 2.0f;
-    private float xRange = 58.0f;
-    private float zRange = 58.0f;
+    private float xRange = 258.0f;
+    private float zRange = 258.0f;
 
     public Animator anim;
 
