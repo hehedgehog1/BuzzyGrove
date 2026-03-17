@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
         if (!gameManager.gameOver)
         {
             // Stop residual motion if needed
-            rb.velocity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
 
             // Clamp position within bounds
