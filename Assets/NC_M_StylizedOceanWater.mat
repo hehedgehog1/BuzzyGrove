@@ -104,7 +104,7 @@ Material:
     - _DepthFadeDistance: 10
     - _FoamBlend: 0.09
     - _FresnelPower: 1
-    - _GradientRefractionScale: 10
+    - _GradientRefractionScale: 23.62
     - _HorizonDistance: 78
     - _IntersectionFoamBlend: 1.09
     - _IntersectionFoamCutoff: 3.57
@@ -148,7 +148,7 @@ Material:
     - _WaveStepness: 0.35
     m_Colors:
     - _BaseColor: {r: 0, g: 0.1989687, b: 1.110646, a: 1}
-    - _CaveColor: {r: 0.035601325, g: 0.16513224, b: 0.49693304, a: 1}
+    - _CaveColor: {r: 0.07431115, g: 0.1618546, b: 0.554717, a: 1}
     - _CaveOffset: {r: -0.45, g: 0, b: 0, a: 0}
     - _CaveScale: {r: 0.01, g: 0.01, b: 0, a: 0}
     - _CaveSecondaryColor: {r: 0, g: 0, b: 0, a: 0}
@@ -159,9 +159,9 @@ Material:
     - _IntersectionFoamColor: {r: 0.49480382, g: 0.7881915, b: 1.5336026, a: 1}
     - _PositionRipples: {r: 0, g: 0, b: 0, a: 0}
     - _SecondaryFoamColor: {r: 0.05471548, g: 0.015913038, b: 0.5622641, a: 0.40784314}
-    - _ShallowColor: {r: 0.036889452, g: 0.16826946, b: 0.49693304, a: 1}
+    - _ShallowColor: {r: 0.07421358, g: 0.15896086, b: 0.5457247, a: 1}
     - _SpecularColor: {r: 0.1856105, g: 0.47707814, b: 0.7509433, a: 0}
-    - _SurfaceFoamColor: {r: 0.7032752, g: 0.72350323, b: 0.8490566, a: 0.2784314}
+    - _SurfaceFoamColor: {r: 0.15016729, g: 0.6075471, b: 0.45438167, a: 0.2784314}
     - _TopColor: {r: 0, g: 0.17848217, b: 0.5622641, a: 0.44705883}
     - _UV: {r: 0, g: 0, b: 0, a: 0}
     - _UVRipples: {r: 0, g: 0, b: 0, a: 0}
