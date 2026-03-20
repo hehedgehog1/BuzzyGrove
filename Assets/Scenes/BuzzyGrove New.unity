@@ -15,9 +15,9 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
   m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_FogColor: {r: 0, g: 0.5977998, b: 0.6679245, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogDensity: 0.022
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -925,7 +925,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7adf7ec4549faac478aa75daacf39ba4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 409607844}
   m_SourcePrefab: {fileID: 100100000, guid: 7adf7ec4549faac478aa75daacf39ba4, type: 3}
 --- !u!1 &210200970
 GameObject:
@@ -2181,6 +2184,33 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1853513814}
   m_SourcePrefab: {fileID: 100100000, guid: e289bf5debb17f6459818c207d781953, type: 3}
+--- !u!1 &409607840 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7adf7ec4549faac478aa75daacf39ba4, type: 3}
+  m_PrefabInstance: {fileID: 195612543}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &409607844
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409607840}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 9127120572191758296, guid: 7adf7ec4549faac478aa75daacf39ba4, type: 3}
 --- !u!1 &424540268 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6584718383106938871, guid: e548e487552d03e4cab24eae2a8b0782, type: 3}
@@ -4007,6 +4037,7 @@ GameObject:
   - component: {fileID: 718603860}
   - component: {fileID: 718603859}
   - component: {fileID: 718603858}
+  - component: {fileID: 718603862}
   m_Layer: 0
   m_Name: Waterfall
   m_TagString: Water
@@ -4108,6 +4139,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &718603862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718603857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 367d72d2f42380346952a4387067063d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaterSourceBehaviour
+  interactionRadius: 15
+  waterSound: {fileID: 8300000, guid: 6b0602150e603d8429cd19284d0d168b, type: 3}
 --- !u!1001 &732337767
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6052,7 +6097,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1111837135}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -6799,6 +6844,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Well4
       objectReference: {fileID: 0}
+    - target: {fileID: 6584718383106938871, guid: e548e487552d03e4cab24eae2a8b0782, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7134,7 +7183,9 @@ GameObject:
   - component: {fileID: 1446147835}
   - component: {fileID: 1446147834}
   - component: {fileID: 1446147833}
-  m_Layer: 0
+  - component: {fileID: 1446147837}
+  - component: {fileID: 1446147838}
+  m_Layer: 4
   m_Name: Ocean
   m_TagString: Water
   m_Icon: {fileID: 0}
@@ -7158,7 +7209,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -7235,6 +7286,41 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1446147837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446147832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 367d72d2f42380346952a4387067063d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaterSourceBehaviour
+  interactionRadius: 15
+  waterSound: {fileID: 8300000, guid: 6b0602150e603d8429cd19284d0d168b, type: 3}
+--- !u!65 &1446147838
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446147832}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10, y: 2.2204459e-16, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1486246405 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9069115365609291303, guid: 60f79905accf3b24fa0114b941f1aac0, type: 3}
@@ -8934,7 +9020,9 @@ GameObject:
   - component: {fileID: 1771623629}
   - component: {fileID: 1771623628}
   - component: {fileID: 1771623627}
-  m_Layer: 0
+  - component: {fileID: 1771623631}
+  - component: {fileID: 1771623632}
+  m_Layer: 4
   m_Name: InLandWater
   m_TagString: Water
   m_Icon: {fileID: 0}
@@ -8958,7 +9046,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -9035,6 +9123,41 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1771623631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771623626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 367d72d2f42380346952a4387067063d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaterSourceBehaviour
+  interactionRadius: 15
+  waterSound: {fileID: 8300000, guid: 6b0602150e603d8429cd19284d0d168b, type: 3}
+--- !u!65 &1771623632
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771623626}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 9.999999, y: 2.2204459e-16, z: 9.999999}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1817823255 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2222111361404534124, guid: 88f2fd29f58b9734683512546acec310, type: 3}
@@ -10883,6 +11006,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Well1
       objectReference: {fileID: 0}
+    - target: {fileID: 6584718383106938871, guid: e548e487552d03e4cab24eae2a8b0782, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10976,7 +11103,7 @@ SceneRoots:
   - {fileID: 1316355522}
   - {fileID: 1375450506}
   - {fileID: 1707845201}
+  - {fileID: 195612543}
   - {fileID: 1771623630}
   - {fileID: 718603861}
   - {fileID: 1446147836}
-  - {fileID: 195612543}

@@ -16,30 +16,51 @@ public class WaterSourceBehaviour : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
+    void Update()
+    {
+    }
+
+
     private void OnMouseDown()
     {
-        Debug.Log("Water clicked");
-        if (IsPlayerNearby() && playerController.waterCarried < 5)
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
         {
-            PlaySound(waterSound);
-            Debug.Log("Water updated by 1");
-            playerController.UpdateWaterCarried(1);
+            if (hit.collider.gameObject == gameObject)
+            {
+                float distance = Vector3.Distance(playerController.transform.position, hit.point);
+
+                if (distance <= interactionRadius)
+                {
+                    Debug.Log("Water clicked");
+
+                    if (playerController.waterCarried < 5)
+                    {
+                        PlaySound(waterSound);
+                        Debug.Log("Water updated by 1");
+                        playerController.UpdateWaterCarried(1);
+                    }
+                }
+                else { Debug.Log("Player too far away to click"); }
+            }
         }
     }
 
-    private bool IsPlayerNearby()
-    {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRadius);
-        foreach (Collider collider in colliders)
-        {
-            if (collider.CompareTag("Player"))
-            {
-                return true;
-            }
-        }
-        Debug.Log("Player too far away to click");
-        return false;
-    }
+    //    private bool IsPlayerNearby()
+    //{
+    //    Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRadius);
+    //    foreach (Collider collider in colliders)
+    //    {
+    //        if (collider.CompareTag("Player"))
+    //        {
+    //            return true;
+    //        }
+    //    }
+    //    Debug.Log("Player too far away to click");
+    //    return false;
+    //}
 
     private void PlaySound(AudioClip clip)
     {
