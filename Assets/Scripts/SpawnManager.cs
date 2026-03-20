@@ -107,20 +107,27 @@ public class SpawnManager : MonoBehaviour
 
     private bool IsValidSpawnPosition(Vector3 position)
     {
-        // Check for overlaps with other grass patches or objects
         Collider[] hitColliders = Physics.OverlapSphere(position, minSpawnDistance);
 
         foreach (Collider collider in hitColliders)
         {
-            if (collider.CompareTag("Ground"))
+            if (collider.CompareTag("Ground") || collider.CompareTag("Water"))
             {
-                continue; // ignore if collides with ground
+                continue;
             }
-            // else pos is invalid
             return false;
         }
 
-        // If no other colliders were found, the position is valid
+        // Raycast to check not on water
+        RaycastHit hit;
+        if (Physics.Raycast(position + Vector3.up * 5f, Vector3.down, out hit, 10f))
+        {
+            if (hit.collider.CompareTag("Water"))
+            {
+                return false;
+            }
+        }
+
         return true;
     }
 }
