@@ -227,13 +227,15 @@ MonoBehaviour:
   - {fileID: 8513089614290524517, guid: 7813a2bacf16a6545bbf77021afc7750, type: 3}
   flowerPrefabs:
   - {fileID: 3027382557665329642, guid: 07659c65fb4fe9645b87adfdbf09e54b, type: 3}
-  - {fileID: 6433909394460414059, guid: 2b531c7c6c76ce042a6886ac3d219d7c, type: 3}
+  - {fileID: 6042800197951435462, guid: 0373c49d51705344fb4977dcc66eda47, type: 3}
   - {fileID: 7558648476528419548, guid: 840981fe1a367da4a8abfd8539b8f999, type: 3}
-  - {fileID: 2302639934059664791, guid: 4b71d93c59673e84889eac3df642edb3, type: 3}
+  - {fileID: 5496642183673948664, guid: e0f12c3fcb51d5c4da19ce1855b1d71c, type: 3}
+  - {fileID: 6433909394460414059, guid: 2b531c7c6c76ce042a6886ac3d219d7c, type: 3}
   - {fileID: 5210326619386687271, guid: 63f0a6cc0191b164fbc5e603853bb5c7, type: 3}
+  - {fileID: 2302639934059664791, guid: 4b71d93c59673e84889eac3df642edb3, type: 3}
+  - {fileID: 6426589667725933813, guid: fa516e92f5ac7ae4d80e533635618148, type: 3}
   - {fileID: 3746152626075637408, guid: e3b419b0ed7e17c46a539b9689e34fdf, type: 3}
   - {fileID: 4594808210830378921, guid: 651c1021cdb5cdd4fa4f66f67b044d47, type: 3}
-  - {fileID: 6042800197951435462, guid: 0373c49d51705344fb4977dcc66eda47, type: 3}
   seedPrefab: {fileID: 5815692475119865924, guid: cca61b5f8c9b215448295cb99952b02e, type: 3}
   soilPatchMaterial: {fileID: 2100000, guid: 65ac99bf73a50c54d92c6ccf674dad72, type: 2}
   wetSoilPatchMaterial: {fileID: 2100000, guid: de38a8897d88c774fa75f2b4b7ea235a, type: 2}
