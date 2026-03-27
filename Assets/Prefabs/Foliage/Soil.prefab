@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 3234316594024402030}
   - component: {fileID: 1967301571309388747}
   - component: {fileID: 4371224006312212225}
+  - component: {fileID: 7543606324540215358}
+  - component: {fileID: 4198559246990720117}
+  - component: {fileID: 1091307651508987580}
   m_Layer: 0
   m_Name: Soil
   m_TagString: Untagged
@@ -26,13 +29,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2857896127142401748}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+  m_LocalRotation: {x: -0.7069834, y: 0, z: 0, w: 0.7072302}
   m_LocalPosition: {x: 27.739782, y: -0.342, z: 3.4976425}
   m_LocalScale: {x: 0.68, y: 0.68, z: 0.63889337}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
 --- !u!33 &1967301571309388747
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -90,3 +93,155 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7543606324540215358
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2857896127142401748}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.745074, y: 1.7012981, z: 0.23700394}
+  m_Center: {x: -0.02188918, y: 0, z: 0.60497963}
+--- !u!82 &4198559246990720117
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2857896127142401748}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1091307651508987580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2857896127142401748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc113e566ca026e4ea74d80298182586, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saplingPrefabs:
+  - {fileID: 8513089614290524517, guid: 7813a2bacf16a6545bbf77021afc7750, type: 3}
+  flowerPrefabs:
+  - {fileID: 3027382557665329642, guid: 07659c65fb4fe9645b87adfdbf09e54b, type: 3}
+  - {fileID: 6433909394460414059, guid: 2b531c7c6c76ce042a6886ac3d219d7c, type: 3}
+  - {fileID: 7558648476528419548, guid: 840981fe1a367da4a8abfd8539b8f999, type: 3}
+  - {fileID: 2302639934059664791, guid: 4b71d93c59673e84889eac3df642edb3, type: 3}
+  - {fileID: 5210326619386687271, guid: 63f0a6cc0191b164fbc5e603853bb5c7, type: 3}
+  - {fileID: 3746152626075637408, guid: e3b419b0ed7e17c46a539b9689e34fdf, type: 3}
+  - {fileID: 4594808210830378921, guid: 651c1021cdb5cdd4fa4f66f67b044d47, type: 3}
+  - {fileID: 6042800197951435462, guid: 0373c49d51705344fb4977dcc66eda47, type: 3}
+  seedPrefab: {fileID: 5815692475119865924, guid: cca61b5f8c9b215448295cb99952b02e, type: 3}
+  soilPatchMaterial: {fileID: 2100000, guid: 65ac99bf73a50c54d92c6ccf674dad72, type: 2}
+  wetSoilPatchMaterial: {fileID: 2100000, guid: de38a8897d88c774fa75f2b4b7ea235a, type: 2}
+  birdPrefab: {fileID: 2402140094273324292, guid: 5ccef18fda5250c4b84210b77a738cad, type: 3}
+  plantSound: {fileID: 8300000, guid: 468a025b679a9de4b896daed303458de, type: 3}
+  seedPlanted: 0
+  isSapling: 0
+  isFlower: 0
+  isWatered: 0
+  isBirdEating: 0
+  player: {fileID: 0}

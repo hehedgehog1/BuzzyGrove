@@ -122,7 +122,7 @@ public class SoilManager : MonoBehaviour
         }
 
         int saplingIndex = Random.Range(0, saplingPrefabs.Length);
-        Vector3 spawnPosition = new Vector3(transform.position.x, -0.195f, transform.position.z);
+        Vector3 spawnPosition = new Vector3(transform.position.x, 0.3f, transform.position.z);
         saplingInstance = Instantiate(saplingPrefabs[saplingIndex], spawnPosition, saplingPrefabs[saplingIndex].transform.rotation);
 
         if (Random.value < birdChance)
@@ -211,7 +211,7 @@ public class SoilManager : MonoBehaviour
 
     private void AddSeedModel()
     {
-        seedInstance = Instantiate(seedPrefab, new Vector3(transform.position.x, 0.085f, transform.position.z), seedPrefab.transform.rotation);
+        seedInstance = Instantiate(seedPrefab, new Vector3(transform.position.x, 0.05f, transform.position.z), seedPrefab.transform.rotation);
     }
 
     private void SpawnBird()
