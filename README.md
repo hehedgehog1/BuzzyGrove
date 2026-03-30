@@ -1,5 +1,4 @@
 <h2>Assets credits:</h2>
-<p>Trees -> https://assetstore.unity.com/packages/3d/environments/landscapes/low-poly-simple-nature-pack-162153?srsltid=AfmBOorcYqMAIv0UE4nHtuJDJYa_Wkhmm1XhTOdBRdvjVFP9A5uftw8p
 <p>Water Shader -> https://assetstore.unity.com/packages/vfx/shaders/water-stylized-shader-orto-perspective-camera-297566
 <p>Background Music -> https://opengameart.org/content/lolor
 <p>Plant Seed SFX -> https://opengameart.org/content/12-player-movement-sfx
