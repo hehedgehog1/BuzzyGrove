@@ -57,7 +57,7 @@ public class UIManager : MonoBehaviour
             "Go pick it up, then click on the <color=#613400>soil</color> to plant it.",
             "Sometimes birds come to eat the seeds.",
             "Tell them to <i>buzz off</i>.",
-            "You need to water the soil too. Click on the <color=#1E90FF>well</color>",
+            "You need to water the soil too. Click on the <color=#1E90FF>pond</color>",
             "Then <i>right click</i> on the soil.",
             "There's lots of <color=#71b61d>grassy</color> spots around here.",
             "Click on them to plant more flowers.",
