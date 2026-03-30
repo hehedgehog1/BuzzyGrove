@@ -14,6 +14,6 @@ public class StartScreenManager : MonoBehaviour
 
     public void StartGame()
     {        
-        SceneManager.LoadScene("BuzzyGrove");
+        SceneManager.LoadScene("BuzzyGrove New");
     }
 }
