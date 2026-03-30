@@ -12,6 +12,7 @@ TagManager:
   - Grass
   - Water
   - Sapling
+  - Bridge
   layers:
   - Default
   - TransparentFX

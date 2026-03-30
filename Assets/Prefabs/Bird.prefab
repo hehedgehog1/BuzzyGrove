@@ -22,15 +22,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c1aeb8354c8fda94da87b8a9970f1da5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.612
+      value: -0.02884
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c1aeb8354c8fda94da87b8a9970f1da5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.414
+      value: -0.03827
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c1aeb8354c8fda94da87b8a9970f1da5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.127
+      value: 0.45753
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c1aeb8354c8fda94da87b8a9970f1da5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: c1aeb8354c8fda94da87b8a9970f1da5, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b32a4e1fb1b379f48a88b974f16d2b9c, type: 2}
     - target: {fileID: 919132149155446097, guid: c1aeb8354c8fda94da87b8a9970f1da5, type: 3}
       propertyPath: m_Name
       value: Bird
@@ -132,6 +136,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

@@ -87,6 +87,13 @@ public class SpawnManager : MonoBehaviour
         {
             spawnPos = new Vector3(Random.Range(-spawnRangeX, spawnRangeX), 0.03f, Random.Range(-spawnRangeZ, spawnRangeZ));
 
+            if (IsOnBridge(spawnPos))
+            {
+                attempts++;
+                if (attempts >= 100) break;
+                continue;
+            }
+
             validPositionFound = IsValidSpawnPosition(spawnPos);
             attempts++;
 
@@ -103,6 +110,21 @@ public class SpawnManager : MonoBehaviour
         {
             Debug.LogWarning("Could not find a valid spawn position for a grass patch after multiple attempts.");
         }
+    }
+
+    bool IsOnBridge(Vector3 position)
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(position + Vector3.up * 5f, Vector3.down, out hit, 10f))
+        {
+            if (hit.collider.CompareTag("Bridge"))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private bool IsValidSpawnPosition(Vector3 position)
