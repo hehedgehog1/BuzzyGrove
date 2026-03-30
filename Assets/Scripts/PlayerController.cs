@@ -53,16 +53,12 @@ public class PlayerController : MonoBehaviour
 
             if (attemptedMove.magnitude > 0.1f)
             {
-                // 🔥 Predict next position
                 Vector3 nextPos = transform.position + attemptedMove * 0.5f;
 
-                // 🔽 Raycast down from that position
                 Ray ray = new Ray(nextPos + Vector3.up * 2f, Vector3.down);
 
-                // ONLY check ground layer
                 if (!Physics.Raycast(ray, out RaycastHit hit, 5f, groundLayer))
                 {
-                    // ❌ No terrain there → it's a hole → block movement
                     moveInput = Vector3.zero;
 
                     anim.SetFloat("horizontal", 0);
@@ -71,7 +67,6 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            // ✅ Safe to move
             moveInput = attemptedMove;
 
             anim.SetFloat("horizontal", moveX);
