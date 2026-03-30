@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +19,11 @@ public class PlayerController : MonoBehaviour
     private float xRange = 258.0f;
     private float zRange = 258.0f;
 
+    public LayerMask groundLayer;
+    public LayerMask waterLayer;
+    public float raycastHeight = 2f;
+    public float raycastDistance = 5f;
+
     public Animator anim;
 
     private Rigidbody rb;
@@ -36,17 +41,39 @@ public class PlayerController : MonoBehaviour
         uiManager = FindObjectOfType<UIManager>();
     }
 
-    
+
     void Update()
     {
         if (!gameManager.gameOver)
         {
-            // Get input
             float moveX = Input.GetAxis("Horizontal");
             float moveZ = Input.GetAxis("Vertical");
-            moveInput = new Vector3(moveX, 0, moveZ).normalized;
 
-            // Update animator
+            Vector3 attemptedMove = new Vector3(moveX, 0, moveZ).normalized;
+
+            if (attemptedMove.magnitude > 0.1f)
+            {
+                // 🔥 Predict next position
+                Vector3 nextPos = transform.position + attemptedMove * 0.5f;
+
+                // 🔽 Raycast down from that position
+                Ray ray = new Ray(nextPos + Vector3.up * 2f, Vector3.down);
+
+                // ONLY check ground layer
+                if (!Physics.Raycast(ray, out RaycastHit hit, 5f, groundLayer))
+                {
+                    // ❌ No terrain there → it's a hole → block movement
+                    moveInput = Vector3.zero;
+
+                    anim.SetFloat("horizontal", 0);
+                    anim.SetFloat("vertical", 0);
+                    return;
+                }
+            }
+
+            // ✅ Safe to move
+            moveInput = attemptedMove;
+
             anim.SetFloat("horizontal", moveX);
             anim.SetFloat("vertical", moveZ);
         }
